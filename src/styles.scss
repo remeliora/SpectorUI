@@ -1,11 +1,34 @@
-@import "fonts.scss";
+@use 'fonts';
 
 :root {
   --dark-color: #000000;
-  --light-color: #FFFFFF;
+  --white-light-color: #FFFFFF;
   --primary-color: #1d8ae2;
+  --dark-primary-color: #2c3e50;
+  --secondary-color: #34495e;
+  --light-color: #ecf0f1;
+  --text-dark-color: #333;
+  --text-light-color: #fff;
+  --indicate-green: #70C38C;
+  --indicate-red: #FF766A;
+  --indicate-grey: #757575;
+  --inactive-buttom-color: #d9d9d9;
 }
 
 body {
   background: var(--light-color);
+  display: block;
+  //height: 100vh;
+  //width: 100vw;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark-color);
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

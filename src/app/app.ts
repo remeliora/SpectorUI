@@ -1,5 +1,7 @@
-import {Component, signal} from '@angular/core';
+import {Component, signal, inject} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
+import {DeviceTypeService} from './data/services/device-type-service';
+import {Filter} from './data/services/interfaces/filter';
 
 @Component({
   selector: 'app-root',

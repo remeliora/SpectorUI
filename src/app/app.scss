@@ -1,29 +1,29 @@
 /* Базовые настройки */
-:root {
-  --primary-color: #2c3e50;
-  --secondary-color: #34495e;
-  --accent-color: #3498db;
-  --light-color: #ecf0f1;
-  --text-color: #333;
-  --text-light: #fff;
-}
+//:root {
+//  --primary-color: #2c3e50;
+//  --secondary-color: #34495e;
+//  --accent-color: #3498db;
+//  --light-color: #ecf0f1;
+//  --text-color: #333;
+//  --text-light: #fff;
+//}
+//
+//* {
+//  margin: 0;
+//  padding: 0;
+//  box-sizing: border-box;
+//}
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-  font-family: 'Roboto', sans-serif;
-  color: var(--text-color);
-}
-
-/* Фиксированные размеры и запрет изменения размера страницы */
-app-root {
-  display: block;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-}
+//html, body {
+//  height: 100%;
+//  font-family: 'Roboto', sans-serif;
+//  color: var(--text-color);
+//}
+//
+///* Фиксированные размеры и запрет изменения размера страницы */
+//app-root {
+//  display: block;
+//  height: 100vh;
+//  width: 100vw;
+//  overflow: hidden;
+//}
