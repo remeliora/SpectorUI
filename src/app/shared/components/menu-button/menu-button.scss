@@ -1,0 +1,36 @@
+.button-container {
+
+}
+
+.button-name {
+  line-height: 35px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.button {
+  width: 100%;
+  background-color: var(--inactive-buttom-color);
+  border: none;
+  border-radius: 4px;
+  color: var(--text-dark-color);
+  opacity: 1;
+  transition: 0.2s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--primary-color);
+    color: var(--text-light-color);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+
+  &:focus,
+  &:active {
+    background-color: var(--primary-color);
+    color: var(--text-light-color);
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.2), 0 0 0 0 rgba(0,0,0,0.19)
+  }
+}

@@ -1,11 +1,13 @@
 :host {
-  display: block;
+  display: grid;
+  grid-template-rows: auto 1fr auto;  /* Шапка, контент, футер */
+  min-height: 100vh;
   background: var(--light-color);
   padding: 20px 20px;
   text-align: center;
 }
 
-.header-logo {
+.sidebar__header {
   margin: 20px;
   padding: 20px;
   color: var(--primary-color);
@@ -14,14 +16,34 @@
   font-weight: 500;
 }
 
-.main-menu-list {
+.sidebar__footer {
   margin: 20px;
   padding: 20px;
   background: none;
   list-style: none;
+  display: grid;
+  grid-gap: 15px;
+  place-content: center;
 }
 
-.menu-item {
+.footer-button {
   display: grid;
-  grid-gap: 10px;
+  grid-template-columns: 50px 50px;
+  grid-gap: 15px;
+}
+
+.footer-icon {
+  width: 35px;
+  height: 35px;
+  color: var(--secondary-color);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--text-dark-color);
+  }
+
+  &:focus,
+  &:active {
+    color: var(--text-dark-color);
+  }
 }

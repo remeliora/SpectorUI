@@ -1,0 +1,31 @@
+<nav>
+  <ul class="main-menu-list">
+    @for (menuItem of menuItems; track menuItem) {
+      <li>
+        <a [routerLink]="[menuItem.link]">
+          <app-menu-button [label]="menuItem.label"></app-menu-button>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <!-- Фильтр для страницы типов устройств -->
+  @if (currentRoute.includes('/device-types')) {
+    <app-menu-filter
+      [options]="deviceTypeFilters"
+      [placeholder]="'Без фильтра'"
+      (selected)="onFilterSelected($event)"
+    >
+    </app-menu-filter>
+  }
+
+  <!-- Фильтр для страницы типов устройств -->
+  @if (currentRoute.includes('/devices')) {
+    <app-menu-filter
+      [options]="deviceFilters"
+      [placeholder]="'Без фильтра'"
+      (selected)="onFilterSelected($event)"
+    >
+    </app-menu-filter>
+  }
+</nav>

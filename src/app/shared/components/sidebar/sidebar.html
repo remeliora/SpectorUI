@@ -1,23 +1,18 @@
-<h1 class="header-logo">
+<header class="sidebar__header">
   <strong class="logo">SPECTOR</strong>
-</h1>
+</header>
 
-<!-- Выводим список фильтров -->
-<!--<pre>-->
-<!--  {{ deviceTypes | json }}-->
-<!--</pre>-->
+<app-navbar></app-navbar>
 
-<nav>
-  <ul class="main-menu-list">
-    <li class="menu-item">
-      <app-menu-button></app-menu-button>
-      <app-menu-button></app-menu-button>
-      <app-menu-button></app-menu-button>
-      <app-menu-button></app-menu-button>
-      <app-menu-button></app-menu-button>
-    </li>
-  </ul>
-</nav>
-
+<footer class="sidebar__footer">
+  <div class="footer-button">
+    <a [routerLink]="['/settings']">
+      <svg icon="settings" class="footer-icon"></svg>
+    </a>
+    <a [routerLink]="['/faq']">
+      <svg icon="question" class="footer-icon"></svg>
+    </a>
+  </div>
+</footer>
 
 

@@ -1,28 +1,18 @@
-import {Component, inject} from '@angular/core';
-import {DeviceTypeService} from '../../../data/services/device-type-service';
-import {MenuButton} from '../menu-button/menu-button';
+import {Component} from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {SvgIcon} from '../svg-icon/svg-icon';
+import {Navbar} from '../navbar/navbar';
 
 @Component({
   selector: 'app-sidebar',
   imports: [
-    MenuButton
+    RouterLink,
+    SvgIcon,
+    Navbar
   ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'
 })
 export class Sidebar {
-  deviceTypeService = inject(DeviceTypeService)
-  deviceTypes: string[] = []
-
-  constructor() {
-    this.deviceTypeService.getUniqueClassNames().subscribe({
-      next: (classNames) => {
-        this.deviceTypes = classNames;
-      },
-      error: (err) => {
-        console.error('Ошибка при загрузке фильтров:', err);
-      },
-    })
-  }
 
 }
