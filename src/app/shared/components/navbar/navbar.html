@@ -1,31 +1,53 @@
+<!-- navbar.html -->
 <nav>
-  <ul class="main-menu-list">
-    @for (menuItem of menuItems; track menuItem) {
-      <li>
-        <a [routerLink]="[menuItem.link]">
-          <app-menu-button [label]="menuItem.label"></app-menu-button>
-        </a>
-      </li>
-    }
-  </ul>
-
-  <!-- Фильтр для страницы типов устройств -->
-  @if (currentRoute.includes('/device-types')) {
-    <app-menu-filter
-      [options]="deviceTypeFilters"
-      [placeholder]="'Без фильтра'"
-      (selected)="onFilterSelected($event)"
-    >
-    </app-menu-filter>
+  @if (config.showBackButton) {
+    <app-menu-back-button (backClicked)="navigateBack()"></app-menu-back-button>
   }
 
-  <!-- Фильтр для страницы типов устройств -->
-  @if (currentRoute.includes('/devices')) {
-    <app-menu-filter
-      [options]="deviceFilters"
-      [placeholder]="'Без фильтра'"
-      (selected)="onFilterSelected($event)"
-    >
-    </app-menu-filter>
+  <!-- Основные ссылки -->
+  @if (config.showMainLinks) {
+    <ul class="main-menu-list">
+      @for (menuItem of mainMenuItems; track menuItem) {
+        <li>
+          <a [routerLink]="[menuItem.link]">
+            <app-menu-button [label]="menuItem.label"></app-menu-button>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+
+  <!-- Фильтр -->
+  @if (config.showFilter) {
+    <!-- Фильтр для страницы типов устройств -->
+    @if (currentRoute.includes('/device-types')) {
+      <app-menu-filter
+        [options]="deviceTypeFilters"
+        [placeholder]="'Без фильтра'"
+        (selected)="onFilterSelected($event)"
+      >
+      </app-menu-filter>
+    }
+
+    <!-- Фильтр для страницы типов устройств -->
+    @if (currentRoute.includes('/devices')) {
+      <app-menu-filter
+        [options]="deviceFilters"
+        [placeholder]="'Без фильтра'"
+        (selected)="onFilterSelected($event)"
+      >
+      </app-menu-filter>
+    }
+  }
+
+  <!-- Ссылки подразделов -->
+  @if (config.showSubsectionButton && config.subsectionButton) {
+    <ul class="main-menu-list">
+      <li>
+        <a [routerLink]="config.subsectionButton.route">
+          <app-menu-button [label]="config.subsectionButton.label"></app-menu-button>
+        </a>
+      </li>
+    </ul>
   }
 </nav>

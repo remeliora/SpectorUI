@@ -4,14 +4,14 @@ import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../data/services/navbar-service';
 
 @Component({
-  selector: 'app-parameter-page',
+  selector: 'app-threshold-detail-page',
   imports: [],
-  templateUrl: './parameter-page.html',
-  styleUrl: './parameter-page.scss'
+  templateUrl: './threshold-detail-page.html',
+  styleUrl: './threshold-detail-page.scss'
 })
-export class ParameterPage implements OnInit, OnDestroy{
-  private destroy$ = new Subject<void>()
-  deviceTypeId: string | null = null;
+export class ThresholdDetailPage implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  deviceId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,17 +22,17 @@ export class ParameterPage implements OnInit, OnDestroy{
     this.route.paramMap.pipe(
       takeUntil(this.destroy$)
     ).subscribe(params => {
-      this.deviceTypeId = params.get('deviceTypeId');
+      this.deviceId = params.get('deviceId');
       this.updateNavbar();
     });
   }
 
   private updateNavbar(): void {
-    if (!this.deviceTypeId) return;
+    if (!this.deviceId) return;
 
     this.navbarService.setConfig({
       showBackButton: true,
-      backRoute: `/device-types/${this.deviceTypeId}`,
+      backRoute: `/devices/${this.deviceId}/thresholds`,
     });
   }
 

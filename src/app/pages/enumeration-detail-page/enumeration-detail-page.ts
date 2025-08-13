@@ -2,19 +2,20 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavbarService} from '../../data/services/navbar-service';
 
 @Component({
-  selector: 'app-enumeration-page',
+  selector: 'app-enumeration-detail-page',
   imports: [],
-  templateUrl: './enumeration-page.html',
-  styleUrl: './enumeration-page.scss'
+  templateUrl: './enumeration-detail-page.html',
+  styleUrl: './enumeration-detail-page.scss'
 })
-export class EnumerationPage implements OnInit, OnDestroy{
+export class EnumerationDetailPage implements OnInit, OnDestroy {
   constructor(
     private navbarService: NavbarService) {
   }
 
   ngOnInit(): void {
     this.navbarService.setConfig({
-      showMainLinks: true
+      showBackButton: true,
+      backRoute: `/enumerations`
     });
   }
 

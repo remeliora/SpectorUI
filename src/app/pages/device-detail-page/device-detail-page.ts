@@ -1,17 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subject, takeUntil} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../data/services/navbar-service';
+import {ActivatedRoute} from '@angular/router';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
-  selector: 'app-parameter-page',
+  selector: 'app-device-detail-page',
   imports: [],
-  templateUrl: './parameter-page.html',
-  styleUrl: './parameter-page.scss'
+  templateUrl: './device-detail-page.html',
+  styleUrl: './device-detail-page.scss'
 })
-export class ParameterPage implements OnInit, OnDestroy{
-  private destroy$ = new Subject<void>()
-  deviceTypeId: string | null = null;
+export class DeviceDetailPage implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  deviceId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,17 +22,22 @@ export class ParameterPage implements OnInit, OnDestroy{
     this.route.paramMap.pipe(
       takeUntil(this.destroy$)
     ).subscribe(params => {
-      this.deviceTypeId = params.get('deviceTypeId');
+      this.deviceId = params.get('deviceId');
       this.updateNavbar();
     });
   }
 
   private updateNavbar(): void {
-    if (!this.deviceTypeId) return;
+    if (!this.deviceId) return;
 
     this.navbarService.setConfig({
       showBackButton: true,
-      backRoute: `/device-types/${this.deviceTypeId}`,
+      backRoute: `/devices`,
+      showSubsectionButton: true,
+      subsectionButton: {
+        label: 'Пороговые значения',
+        route: `/devices/${this.deviceId}/thresholds`
+      }
     });
   }
 

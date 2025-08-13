@@ -4,26 +4,32 @@ import {DeviceTypeService} from '../../../data/services/device-type-service';
 import {DeviceService} from '../../../data/services/device-service';
 import {MenuButton} from '../menu-button/menu-button';
 import {MenuFilter} from '../menu-filter/menu-filter';
+import {NavbarConfig, NavbarService} from '../../../data/services/navbar-service';
+import {MenuBackButton} from '../menu-back-button/menu-back-button';
 
 @Component({
   selector: 'app-navbar',
   imports: [
     MenuButton,
     MenuFilter,
-    RouterLink
+    RouterLink,
+    MenuBackButton
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })
 export class Navbar {
   private router = inject(Router);
-  deviceTypeService = inject(DeviceTypeService)
-  deviceService = inject(DeviceService)
+  private navbarService = inject(NavbarService);
+  deviceTypeService = inject(DeviceTypeService);
+  deviceService = inject(DeviceService);
 
-  menuItems = [
-    {label: 'Оборудование', link: 'devices'},
-    {label: 'Тип устройства', link: 'device-types'},
-    {label: 'Словари статусов', link: 'enumerations'}
+  config: NavbarConfig = {};
+
+  mainMenuItems = [
+    { label: 'Оборудование', link: 'devices' },
+    { label: 'Тип устройства', link: 'device-types' },
+    { label: 'Словари статусов', link: 'enumerations' }
   ]
 
   deviceTypeFilters: string[] = [];
@@ -32,6 +38,20 @@ export class Navbar {
   constructor() {
     this.loadDeviceTypeFilters();
     this.loadDeviceFilters();
+    this.navbarService.config$.subscribe(config => {
+      this.config = config;
+    })
+  }
+
+  navigateBack() {
+    if (this.config.backRoute) {
+      this.router.navigateByUrl(this.config.backRoute);
+    } else {
+      // Fallback: переход на один уровень выше
+      const segments = this.router.url.split('/');
+      segments.pop();
+      this.router.navigateByUrl(segments.join('/'));
+    }
   }
 
   loadDeviceTypeFilters() {

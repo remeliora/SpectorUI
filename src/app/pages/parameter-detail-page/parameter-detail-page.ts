@@ -1,15 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import {Subject, takeUntil} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../data/services/navbar-service';
 
 @Component({
-  selector: 'app-parameter-page',
+  selector: 'app-parameter-detail-page',
   imports: [],
-  templateUrl: './parameter-page.html',
-  styleUrl: './parameter-page.scss'
+  templateUrl: './parameter-detail-page.html',
+  styleUrl: './parameter-detail-page.scss'
 })
-export class ParameterPage implements OnInit, OnDestroy{
+export class ParameterDetailPage {
+
   private destroy$ = new Subject<void>()
   deviceTypeId: string | null = null;
 
@@ -32,7 +33,7 @@ export class ParameterPage implements OnInit, OnDestroy{
 
     this.navbarService.setConfig({
       showBackButton: true,
-      backRoute: `/device-types/${this.deviceTypeId}`,
+      backRoute: `/device-types/${this.deviceTypeId}/parameters`,
     });
   }
 
