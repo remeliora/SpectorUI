@@ -1,0 +1,22 @@
+<!-- card.html -->
+<button class="card__container">
+  <div class="info__container" >
+    <strong class="info__main">{{ mainInfo }}</strong>
+    <p class="info__secondary">{{ secondInfo }}</p>
+  </div>
+  <div class="switch-container">
+    @if (showSwitch) {
+      <app-switch></app-switch>
+    }
+  </div>
+  <div class="indicator-container">
+    @if (showIndicator) {
+      <div class="indicator"></div>
+    }
+  </div>
+  <div class="button-edit__container">
+    <button class="button-edit" [routerLink]="editRoute">
+      <svg icon="edit" class="button-edit__icon"></svg>
+    </button>
+  </div>
+</button>

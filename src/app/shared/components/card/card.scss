@@ -1,0 +1,79 @@
+.card__container {
+  width: 100%;
+  padding: 20px;
+  background-color: var(--text-light-color);
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  grid-template-rows: 40px 40px;
+  column-gap: 10px;
+  row-gap: 5px;
+  border: 3px solid var(--inactive-buttom-color);
+  border-radius: 10px;
+  opacity: 1;
+  transition: all 0.2s ease;
+
+  &:focus-within {
+    border: 3px solid var(--primary-color);
+  }
+
+  &:focus,
+  &:active {
+    border: 3px solid var(--primary-color);
+  }
+}
+
+.info__container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 5px;
+  justify-items: start;
+}
+
+.info__main {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.info__secondary {
+  font-family: 'Inter', sans-serif;
+  color: var(--secondary-color);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.indicator-container {
+  align-content: end;
+}
+
+.indicator {
+  padding: 7px 0;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--indicate-green);
+}
+
+.button-edit {
+  background-color: transparent;
+  color: var(--inactive-buttom-color);
+  border: none;
+  width: 40px;
+  height: 40px;
+}
+
+.button-edit__icon {
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+  transition: 0.2s;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--primary-color);
+  }
+
+  &:focus,
+  &:active {
+    color: var(--primary-color);
+  }
+}

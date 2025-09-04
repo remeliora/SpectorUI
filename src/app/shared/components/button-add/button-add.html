@@ -1,0 +1,9 @@
+<!-- button-add.html -->
+<div class="button-add__container">
+  <button class="button-add"
+          [routerLink]="routerLink"
+          (click)="onClick.emit($event)">
+    <svg icon="add" class="button-add__icon"></svg>
+    <strong class="button-add__name">Добавить</strong>
+  </button>
+</div>

@@ -1,0 +1,16 @@
+<!-- page-layout.html -->
+<div class="page-content">
+  <div class="page-header">
+    <header class="page-header__label">
+      <ng-container *ngTemplateOutlet="pageLabelTemplate"></ng-container>
+    </header>
+    <div class="page-header__button-container">
+      <ng-container *ngTemplateOutlet="pageButtonsTemplate"></ng-container>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="content-area">
+      <ng-container *ngTemplateOutlet="pageBodyTemplate"></ng-container>
+    </div>
+  </div>
+</div>

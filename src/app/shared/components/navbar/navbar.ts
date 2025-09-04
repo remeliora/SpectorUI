@@ -6,6 +6,7 @@ import {MenuButton} from '../menu-button/menu-button';
 import {MenuFilter} from '../menu-filter/menu-filter';
 import {NavbarConfig, NavbarService} from '../../../data/services/navbar-service';
 import {MenuBackButton} from '../menu-back-button/menu-back-button';
+import {FilterService} from '../../../data/services/filter-service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,6 +22,7 @@ import {MenuBackButton} from '../menu-back-button/menu-back-button';
 export class Navbar {
   private router = inject(Router);
   private navbarService = inject(NavbarService);
+  private filterService = inject(FilterService);
   deviceTypeService = inject(DeviceTypeService);
   deviceService = inject(DeviceService);
 
@@ -83,7 +85,10 @@ export class Navbar {
 
   // Обработчик выбора фильтра
   onFilterSelected(filter: string | null) {
-    console.log('Выбран фильтр:', filter);
-    // Здесь можно добавить логику обработки выбора фильтра
+    if (this.currentRoute.includes('/device-types')) {
+      this.filterService.setDeviceTypeFilter(filter);
+    } else if (this.currentRoute.includes('/devices')) {
+      this.filterService.setDeviceFilter(filter);
+    }
   }
 }

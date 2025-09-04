@@ -2,7 +2,7 @@
   display: grid;
   grid-template-rows: auto 1fr auto;  /* Шапка, контент, футер */
   min-height: 100vh;
-  background: var(--light-color);
+  background: var(--text-light-color);
   padding: 20px 20px;
   text-align: center;
 }
@@ -11,7 +11,7 @@
   margin: 20px;
   padding: 20px;
   color: var(--primary-color);
-  font-size: 35px;
+  font-size: 36px;
   line-height: 35px;
   font-weight: 500;
 }
@@ -36,6 +36,8 @@
   width: 35px;
   height: 35px;
   color: var(--secondary-color);
+  opacity: 1;
+  transition: 0.2s;
 
   &:hover,
   &:focus-visible {

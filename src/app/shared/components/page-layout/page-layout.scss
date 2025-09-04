@@ -1,0 +1,48 @@
+.page-content {
+  display: grid;
+  grid-template-rows: 155px auto;
+  height: 100%;
+}
+
+.page-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 20px 20px 20px 0;
+  align-content: end;
+}
+
+.page-header__label {
+  color: var(--secondary-color);
+  font-size: 36px;
+  line-height: 35px;
+  font-weight: 500;
+  align-content: end;
+}
+
+.page-header__button-container {
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-content: end;
+}
+
+.page-body {
+  margin: 0 60px 60px 0;
+  border: 2px solid var(--inactive-buttom-color);
+  border-radius: 10px;
+  height: 780px;
+}
+
+.content-area {
+  display: block;
+  margin: 20px;
+  height: 737px;
+  overflow: auto;
+  // Скрываем скроллбар но оставляем функциональность
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}

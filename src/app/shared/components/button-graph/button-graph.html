@@ -1,0 +1,9 @@
+<!-- button-graph.html -->
+<div class="button-graph__container">
+  <button class="button-graph"
+          [routerLink]="routerLink"
+          (click)="onClick.emit($event)">
+    <svg icon="graph" class="button-graph__icon"></svg>
+    <strong class="button-graph__name">Построрить график</strong>
+  </button>
+</div>

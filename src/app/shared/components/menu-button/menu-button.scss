@@ -3,6 +3,7 @@
 }
 
 .menu-button-name {
+  font-family: 'Inter', sans-serif;
   line-height: 35px;
   font-size: 18px;
   font-weight: 400;
@@ -24,13 +25,13 @@
   &:focus-visible {
     background-color: var(--primary-color);
     color: var(--text-light-color);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 0 16px 0 rgba(0,0,0,0.25), 0 0 16px 0 rgba(0,0,0,0.19);
   }
 
   &:focus,
   &:active {
     background-color: var(--primary-color);
     color: var(--text-light-color);
-    box-shadow: 0 0 0 0 rgba(0,0,0,0.2), 0 0 0 0 rgba(0,0,0,0.19)
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.25), 0 0 0 0 rgba(0,0,0,0.19)
   }
 }

@@ -1,1 +1,37 @@
-<p>device-page works!</p>
+<!-- device-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel></ng-template>
+
+  <ng-template appButtons>
+    <app-button-graph [routerLink]="['/graphs']"></app-button-graph>
+    <app-button-add [routerLink]="['/devices/new']"></app-button-add>
+  </ng-template>
+
+  <ng-template appBody>
+    <app-list-of-cards-layout>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+      <app-card></app-card>
+    </app-list-of-cards-layout>
+  </ng-template>
+
+</app-page-layout>
