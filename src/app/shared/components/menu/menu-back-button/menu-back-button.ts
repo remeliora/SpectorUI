@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {SvgIcon} from '../svg-icon/svg-icon';
+import {SvgIcon} from '../../svg-icon/svg-icon';
 
 @Component({
   selector: 'app-menu-back-button',

@@ -4,7 +4,7 @@ import {DevicePage} from './pages/device-page/device-page';
 import {ParameterPage} from './pages/parameter-page/parameter-page';
 import {ThresholdPage} from './pages/threshold-page/threshold-page';
 import {SettingPage} from './pages/setting-page/setting-page';
-import {Layout} from './shared/components/layout/layout';
+import {Layout} from './shared/components/layouts/layout/layout';
 import {EnumerationPage} from './pages/enumeration-page/enumeration-page';
 import {DeviceDetailPage} from './pages/device-detail-page/device-detail-page';
 import {ThresholdDetailPage} from './pages/threshold-detail-page/threshold-detail-page';

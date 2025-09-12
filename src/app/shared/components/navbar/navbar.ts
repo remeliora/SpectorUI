@@ -2,10 +2,10 @@ import {Component, inject} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {DeviceTypeService} from '../../../data/services/device-type-service';
 import {DeviceService} from '../../../data/services/device-service';
-import {MenuButton} from '../menu-button/menu-button';
-import {MenuFilter} from '../menu-filter/menu-filter';
+import {MenuButton} from '../menu/menu-button/menu-button';
+import {MenuFilter} from '../menu/menu-filter/menu-filter';
 import {NavbarConfig, NavbarService} from '../../../data/services/navbar-service';
-import {MenuBackButton} from '../menu-back-button/menu-back-button';
+import {MenuBackButton} from '../menu/menu-back-button/menu-back-button';
 import {FilterService} from '../../../data/services/filter-service';
 
 @Component({

@@ -1,7 +1,7 @@
 import {Component, ContentChild} from '@angular/core';
-import {PageLabelDirective} from '../../../data/services/page-label-directive';
-import {PageButtonsDirective} from '../../../data/services/page-buttons-directive';
-import {PageBodyDirective} from '../../../data/services/page-body-directive';
+import {PageLabelDirective} from '../../../../data/services/page-label-directive';
+import {PageButtonsDirective} from '../../../../data/services/page-buttons-directive';
+import {PageBodyDirective} from '../../../../data/services/page-body-directive';
 import {NgTemplateOutlet} from '@angular/common';
 
 @Component({

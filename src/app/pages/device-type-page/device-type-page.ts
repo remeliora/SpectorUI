@@ -1,13 +1,13 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {NavbarService} from '../../data/services/navbar-service';
-import {PageLayout} from '../../shared/components/page-layout/page-layout';
-import {ButtonGraph} from '../../shared/components/button-graph/button-graph';
-import {ButtonAdd} from '../../shared/components/button-add/button-add';
+import {PageLayout} from '../../shared/components/layouts/page-layout/page-layout';
+import {ButtonGraph} from '../../shared/components/buttons/button-graph/button-graph';
+import {ButtonAdd} from '../../shared/components/buttons/button-add/button-add';
 import {PageLabelDirective} from '../../data/services/page-label-directive';
 import {PageBodyDirective} from '../../data/services/page-body-directive';
 import {PageButtonsDirective} from '../../data/services/page-buttons-directive';
 import {Card} from '../../shared/components/card/card';
-import {ListOfCardsLayout} from '../../shared/components/list-of-cards-layout/list-of-cards-layout';
+import {ListOfCardsLayout} from '../../shared/components/layouts/list-of-cards-layout/list-of-cards-layout';
 import {DeviceTypeService} from '../../data/services/device-type-service';
 import {DeviceTypeCard} from '../../data/services/interfaces/device-type-card';
 import {FilterService} from '../../data/services/filter-service';

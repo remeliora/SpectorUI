@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SvgIcon} from '../svg-icon/svg-icon';
+import {SvgIcon} from '../../svg-icon/svg-icon';
 import {RouterLink} from '@angular/router';
 
 @Component({
