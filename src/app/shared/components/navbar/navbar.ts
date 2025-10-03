@@ -7,6 +7,7 @@ import {MenuFilter} from '../menu/menu-filter/menu-filter';
 import {NavbarConfig, NavbarService} from '../../../data/services/navbar-service';
 import {MenuBackButton} from '../menu/menu-back-button/menu-back-button';
 import {FilterService} from '../../../data/services/filter-service';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -25,6 +26,7 @@ export class Navbar {
   private filterService = inject(FilterService);
   deviceTypeService = inject(DeviceTypeService);
   deviceService = inject(DeviceService);
+  private destroy$ = new Subject<void>();
 
   config: NavbarConfig = {};
 
@@ -42,7 +44,13 @@ export class Navbar {
     this.loadDeviceFilters();
     this.navbarService.config$.subscribe(config => {
       this.config = config;
-    })
+    });
+
+    this.deviceTypeService.refreshFilters$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadDeviceTypeFilters();
+      });
   }
 
   navigateBack() {

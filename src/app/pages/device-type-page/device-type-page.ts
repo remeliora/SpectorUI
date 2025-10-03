@@ -9,7 +9,7 @@ import {PageButtonsDirective} from '../../data/services/page-buttons-directive';
 import {Card} from '../../shared/components/card/card';
 import {ListOfCardsLayout} from '../../shared/components/layouts/list-of-cards-layout/list-of-cards-layout';
 import {DeviceTypeService} from '../../data/services/device-type-service';
-import {DeviceTypeCard} from '../../data/services/interfaces/device-type-card';
+import {DeviceTypeCard} from '../../data/services/interfaces/device-type/device-type-card';
 import {FilterService} from '../../data/services/filter-service';
 import {Subscription, switchMap} from 'rxjs';
 
@@ -40,7 +40,9 @@ export class DeviceTypePage implements OnInit, OnDestroy {
     private navbarService: NavbarService) {
     this.deviceTypeService.getDeviceTypes()
       .subscribe(
-        value => {this.deviceTypeCards = value}
+        value => {
+          this.deviceTypeCards = value
+        }
       )
   }
 

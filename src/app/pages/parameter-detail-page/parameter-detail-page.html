@@ -1,1 +1,102 @@
-<p>parameter-detail-page works!</p>
+<!--parameter-detail-page.html-->
+<app-page-layout>
+
+  <ng-template appLabel>
+        @if (parameter(); as parameters) {
+          {{ parameters.name }}
+        } @else {
+          Новый параметр
+        }
+  </ng-template>
+
+  <ng-template appButtons></ng-template>
+
+  <ng-template appBody>
+    <app-detail-info-layout>
+      <form action="" class="form-container" [formGroup]="form">
+        <div class="form-content">
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              Название
+            </span>
+            <input class="form-label-container__input"
+                   type="text" formControlName="name">
+          </label>
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              OID-адрес
+            </span>
+            <input class="form-label-container__input"
+                   type="text" formControlName="address">
+          </label>
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              Метрика
+            </span>
+            <input class="form-label-container__input"
+                   type="text" formControlName="metric">
+          </label>
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              Константа
+            </span>
+            <input class="form-label-container__input"
+                   type="text" formControlName="additive">
+          </label>
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              Коэффициент
+            </span>
+            <input class="form-label-container__input"
+                   type="text" formControlName="coefficient">
+          </label>
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              Тип данных
+            </span>
+            <app-select
+              [options]="dataTypes()"
+              [displayField]="'displayName'"
+              [valueField]="'name'"
+              [placeholder]="'Выберите тип данных'"
+              [selectedValue]="form.get('dataType')?.value"
+              (valueChange)="onDataTypeChange($event)"
+              [class.error]="form.get('dataType')?.invalid && form.get('dataType')?.touched">
+            </app-select>
+          </label>
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              Описание
+            </span>
+            <textarea class="form-label-container__textarea"
+                      type="text" formControlName="description">
+            </textarea>
+          </label>
+          <label class="form-label-container">
+            <span class="form-label-container__label">
+              Выбрать устройство
+            </span>
+            <app-multi-select
+              [items]="devices()"
+              (selectionChange)="onDevicesSelectionChange($event)">
+            </app-multi-select>
+          </label>
+        </div>
+
+
+
+        <div class="buttons-container">
+          <app-menu-function-button
+            [showDelete]="isEditMode"
+
+            (onCancel)="onCancel()"
+
+          >
+
+          </app-menu-function-button>
+        </div>
+      </form>
+    </app-detail-info-layout>
+  </ng-template>
+
+</app-page-layout>

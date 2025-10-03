@@ -1,0 +1,14 @@
+<!-- menu-function-button -->
+<div class="menu-function-button-container">
+  <button class="function-button__save" (click)="onSave.emit()">
+    <span>Сохранить</span>
+  </button>
+  <button class="function-button__cancel" (click)="onCancel.emit()">
+    <span>Отмена</span>
+  </button>
+  @if (showDelete) {
+    <button class="function-button__delete" (click)="onDelete.emit()">
+      <span>Удалить</span>
+    </button>
+  }
+</div>

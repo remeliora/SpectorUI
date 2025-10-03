@@ -12,9 +12,9 @@
     <app-list-of-cards-layout>
       @for (deviceTypeCard of deviceTypeCards; track deviceTypeCard.id) {
         <app-card
-        [mainInfo]="deviceTypeCard.name"
-        [secondInfo]="deviceTypeCard.description"
-        [editRoute]="['/device-types', deviceTypeCard.id]"></app-card>
+          [mainInfo]="deviceTypeCard.name"
+          [secondInfo]="deviceTypeCard.description"
+          [editRoute]="['/device-types', deviceTypeCard.id]"></app-card>
       }
     </app-list-of-cards-layout>
   </ng-template>

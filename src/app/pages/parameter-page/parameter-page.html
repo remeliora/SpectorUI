@@ -1,1 +1,47 @@
-<p>parameter-page works!</p>
+<!-- parameter-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel>
+    @if (deviceType; as deviceType) {
+      {{ deviceType.name }}
+    } @else {
+      Загрузка...
+    }
+  </ng-template>
+
+  <ng-template appButtons>
+    <app-button-add
+      [routerLink]="['/device-types', deviceTypeId, 'parameters', 'new']">
+    </app-button-add>
+  </ng-template>
+
+  <ng-template appBody>
+    <app-list-of-tables-layout>
+      <div class="parameter-table__container">
+        <div class="parameter-table__header">
+          <strong>Наименование</strong>
+          <strong>Идентификатор</strong>
+          <strong>Метрика</strong>
+          <strong>Описание</strong>
+        </div>
+        <div class="parameter-table__body">
+          @for (parameter of parameters; track parameter.id) {
+            <button
+              class="parameter-table__row"
+              (dblclick)="onParameterDblClick(parameter.id)">
+              <span>{{ parameter.name }}</span>
+              <span>{{ parameter.address }}</span>
+              <span>{{ parameter.metric }}</span>
+              <span>{{ parameter.description }}</span>
+            </button>
+          } @empty {
+            <div class="parameter-table__empty">
+              Нет параметров для отображения
+            </div>
+          }
+        </div>
+      </div>
+    </app-list-of-tables-layout>
+  </ng-template>
+
+</app-page-layout>

@@ -1,18 +1,18 @@
 <!-- menu-filter.html -->
-<div class="select-container">
-  <div class="select-wrapper" (click)="toggleDropdown()">
+<div class="filter-select__container">
+  <div class="filter-select__wrapper" (click)="toggleDropdown()">
     {{ selectedOption || placeholder }}
 <!--    <svg icon="arrow" class="select-icon"></svg>-->
     @if (isOpen) {
-      <div class="select-menu-list">
-        <ul class="option-item">
-          <li class="option-label" (click)="selectOption(null); $event.stopPropagation()">
+      <div class="filter-select__menu-list">
+        <ul class="filter-option__item">
+          <li class="filter-option__label" (click)="selectOption(null); $event.stopPropagation()">
             <a>
               Без фильтра
             </a>
           </li>
           @for (option of options; track option) {
-            <li class="option-label" (click)="selectOption(option); $event.stopPropagation()">
+            <li class="filter-option__label" (click)="selectOption(option); $event.stopPropagation()">
               <a>
                 {{ option }}
               </a>

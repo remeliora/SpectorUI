@@ -1,17 +1,12 @@
-.filter-select__container {
-  margin: 0 20px;
-  padding: 20px 20px;
+.select__container {
   display: flex;
   gap: 5px;
-  justify-items: center;
-  align-items: center;
   line-height: 35px;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 350;
 }
 
-.filter-select__wrapper {
-  display: inline-block;
+.select__wrapper {
   width: 100%;
   cursor: pointer;
   position: relative;
@@ -23,19 +18,25 @@
   opacity: 1;
   transition: border-color 0.2s, box-shadow 0.2s;
 
-  &:hover,
-  &:focus-visible {
+  &:hover {
     border: 3px solid var(--primary-color);
-    box-shadow: 0 0 16px 0 rgba(0,0,0,0.25), 0 0 16px 0 rgba(0,0,0,0.19);
   }
 
-  &:focus {
+  &:focus-within {
     border: 3px solid var(--primary-color);
-    box-shadow: 0 0 0 0 rgba(0,0,0,0.25), 0 0 0 0 rgba(0,0,0,0.19)
+  }
+
+  &:focus,
+  &:active {
+    border: 3px solid var(--primary-color);
   }
 }
 
-.filter-select__menu-list {
+.select__option {
+  padding: 0 12px;
+}
+
+.select__menu-list {
   position: absolute;
   overflow: auto;
   width: 100%;
@@ -45,7 +46,7 @@
   background: var(--text-light-color);
 }
 
-.filter-option__item {
+.option__item {
   list-style: none;
   margin: 5px;
   padding: 5px;
@@ -53,24 +54,8 @@
   grid-gap: 5px ;
 }
 
-//.select-icon {
-//  position: absolute;
-//  right: 10px;
-//  top: 2.5px;
-//  width: 30px;
-//  height: 30px;
-//  color: var(--text-dark-color);
-//
-//  &:hover {
-//    color: var(--primary-color);
-//  }
-//
-//  &:active {
-//    color: var(--primary-color);
-//  }
-//}
-
-.filter-option__label {
+.option__label {
+  padding: 0 12px;
   border: none;
   border-radius: 4px;
   opacity: 1;

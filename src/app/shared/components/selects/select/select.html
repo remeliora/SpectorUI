@@ -1,0 +1,21 @@
+<!-- select.html -->
+<div class="select__container">
+  <div class="select__wrapper" (click)="toggleDropdown()">
+    <div class="select__option">
+      {{ selectedDisplayText || placeholder }}
+    </div>
+    @if (isOpen) {
+      <div class="select__menu-list">
+        <ul class="option__item">
+          @for (option of options; track option) {
+            <li class="option__label" (click)="selectOption(option); $event.stopPropagation()">
+              <a>
+                {{ getDisplayText(option) }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</div>

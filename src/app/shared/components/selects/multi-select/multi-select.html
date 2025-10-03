@@ -1,0 +1,50 @@
+<!-- multi-select.html -->
+<div class="multi-select-dropdown">
+  <div class="input-container">
+    @for (item of items; track item.id) {
+      @if (item.selected) {
+        <div class="selected-item">
+          {{ item.mainInfo }}
+          <button (click)="removeItem(item, $event)">×</button>
+        </div>
+      }
+    }
+
+    <input
+      type="text"
+      (focus)="showDropdown()"
+      (input)="filterItems($event)"
+      [placeholder]="getPlaceholder()"
+    />
+  </div>
+
+  @if (isDropdownVisible) {
+    <div class="dropdown-list">
+      <!-- Кнопка "Выбрать все" -->
+      <div class="dropdown-item select-all" (click)="toggleSelectAll($event)">
+        <span class="checkbox" [class.checked]="areAllSelected()">
+          @if (areAllSelected()) {
+            <span class="checkmark">✓</span>
+          }
+        </span>
+        <span><strong>{{ areAllSelected() ? 'Снять все' : 'Выбрать все' }}</strong></span>
+      </div>
+
+      <hr class="divider" />
+
+      @for (item of filteredItems; track item.id) {
+        <div class="dropdown-item" (click)="toggleItem(item, $event)">
+          <span class="checkbox" [class.checked]="item.selected">
+            @if (item.selected) {
+              <span class="checkmark">✓</span>
+            }
+          </span>
+          <span>{{ item.mainInfo }}</span>
+          @if (item.secondInfo) {
+            <span class="second-info">{{ item.secondInfo }}</span>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
