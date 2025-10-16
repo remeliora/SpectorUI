@@ -35,9 +35,9 @@
               <span>{{ parameter.description }}</span>
             </button>
           } @empty {
-            <div class="parameter-table__empty">
-              Нет параметров для отображения
-            </div>
+            <app-empty-layout
+              [errorMessage]="'Добавьте параметр для отображения'">
+            </app-empty-layout>
           }
         </div>
       </div>

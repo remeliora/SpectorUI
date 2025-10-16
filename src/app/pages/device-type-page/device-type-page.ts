@@ -11,7 +11,8 @@ import {ListOfCardsLayout} from '../../shared/components/layouts/list-of-cards-l
 import {DeviceTypeService} from '../../data/services/device-type-service';
 import {DeviceTypeCard} from '../../data/services/interfaces/device-type/device-type-card';
 import {FilterService} from '../../data/services/filter-service';
-import {Subscription, switchMap} from 'rxjs';
+import {Subject, switchMap, takeUntil} from 'rxjs';
+import {EmptyLayout} from '../../shared/components/layouts/empty-layout/empty-layout';
 
 @Component({
   selector: 'app-device-type-page',
@@ -23,47 +24,46 @@ import {Subscription, switchMap} from 'rxjs';
     PageBodyDirective,
     PageButtonsDirective,
     Card,
-    ListOfCardsLayout
+    ListOfCardsLayout,
+    EmptyLayout
   ],
   templateUrl: './device-type-page.html',
   styleUrl: './device-type-page.scss'
 })
 export class DeviceTypePage implements OnInit, OnDestroy {
-  deviceTypeService = inject(DeviceTypeService);
-  deviceTypeCards: DeviceTypeCard[] = []
+  // === SERVICES ===
+  private readonly deviceTypeService = inject(DeviceTypeService);
+  private readonly navbarService = inject(NavbarService);
+  private readonly filterService = inject(FilterService);
+  private readonly destroy$ = new Subject<void>();
 
-  private filterService = inject(FilterService);
-  private subscription!: Subscription;
-
-
-  constructor(
-    private navbarService: NavbarService) {
-    this.deviceTypeService.getDeviceTypes()
-      .subscribe(
-        value => {
-          this.deviceTypeCards = value
-        }
-      )
-  }
+  // === STATES ===
+  deviceTypeCards: DeviceTypeCard[] = [];
 
   ngOnInit(): void {
     this.navbarService.setConfig({
       showMainLinks: true,
       showFilter: true,
     });
-    this.subscription = this.filterService.deviceTypeFilter$
+    this.filterService.deviceTypeFilter$
       .pipe(
-        switchMap(filterValue =>
-          this.deviceTypeService.getDeviceTypes(filterValue)
-        )
+        takeUntil(this.destroy$),
+        switchMap(filterValue => this.deviceTypeService.getDeviceTypes(filterValue))
       )
-      .subscribe(value => {
-        this.deviceTypeCards = value;
+      .subscribe({
+        next: (value) => {
+          this.deviceTypeCards = value;
+        },
+        error: (error) => {
+          console.error('Error loading device types:', error);
+          this.deviceTypeCards = [];
+        }
       });
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.navbarService.resetConfig();
-    this.subscription.unsubscribe();
   }
 }

@@ -30,25 +30,25 @@ export class DeviceTypeService {
     return this.http.get<DeviceTypeCard[]>(this.baseApiUrl, {params})
   }
 
-  getDeviceTypeById(id: number): Observable<DeviceTypeDetail> {
+  getDeviceTypeById(id: number) {
     return this.http.get<DeviceTypeDetail>(`${this.baseApiUrl}/${id}`);
   }
 
-  getDevicesByType(deviceTypeId: number): Observable<DeviceByDeviceType[]> {
+  getDevicesByType(deviceTypeId: number) {
     return this.http.get<DeviceByDeviceType[]>(
       `${this.baseApiUrl}/${deviceTypeId}/devices-list`
     );
   }
 
-  createDeviceType(data: DeviceTypeCreate): Observable<DeviceTypeDetail> {
+  createDeviceType(data: DeviceTypeCreate) {
     return this.http.post<DeviceTypeDetail>(this.baseApiUrl, data);
   }
 
-  updateDeviceType(id: number, data: DeviceTypeDetail): Observable<DeviceTypeDetail> {
+  updateDeviceType(id: number, data: DeviceTypeDetail) {
     return this.http.put<DeviceTypeDetail>(`${this.baseApiUrl}/${id}`, data);
   }
 
-  deleteDeviceType(id: number): Observable<void> {
+  deleteDeviceType(id: number) {
     return this.http.delete<void>(`${this.baseApiUrl}/${id}`);
   }
 

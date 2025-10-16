@@ -9,27 +9,17 @@
 
   <ng-template appBody>
     <app-list-of-cards-layout>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
+      @for (enumerationCard of enumerationCards; track enumerationCard.name) {
+        <app-card
+          [mainInfo]="enumerationCard.name"
+          [secondInfo]="'Количество статусов: ' + enumerationCard.count"
+          [editRoute]="['/enumerations', enumerationCard.name]">
+        </app-card>
+      } @empty {
+        <app-empty-layout
+          [errorMessage]="'Добавить словарь для отображения'">
+        </app-empty-layout>
+      }
     </app-list-of-cards-layout>
   </ng-template>
 

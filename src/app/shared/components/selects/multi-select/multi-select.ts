@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, inject, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, inject, Input, Output, SimpleChanges} from '@angular/core';
 import {MultiSelectOption} from '../../../../data/services/interfaces/select/multi-select-option';
 
 @Component({
@@ -15,9 +15,22 @@ export class MultiSelect {
   private elementRef = inject(ElementRef);
   isDropdownVisible = false;
   filteredItems: MultiSelectOption[] = [];
+  selectedItems: Set<number> = new Set(); // Сделал публичным для отладки
 
-  ngOnInit() {
-    this.filteredItems = [...this.items];
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['items']) {
+      this.initializeSelectedItems();
+      this.filteredItems = [...this.items];
+    }
+  }
+
+  private initializeSelectedItems() {
+    this.selectedItems.clear();
+    this.items.forEach(item => {
+      if (item.selected) {
+        this.selectedItems.add(item.id);
+      }
+    });
   }
 
   @HostListener('document:click', ['$event'])
@@ -28,9 +41,13 @@ export class MultiSelect {
   }
 
   getPlaceholder(): string {
-    const selectedCount = this.items.filter(i => i.selected).length;
+    const selectedCount = this.selectedItems.size;
     if (selectedCount === 0) return 'Выбрать...';
-    return `${selectedCount} selected`;
+    return `Выбрано: ${selectedCount}`;
+  }
+
+  getSelectedItems(): MultiSelectOption[] {
+    return this.items.filter(item => this.selectedItems.has(item.id));
   }
 
   filterItems(event: Event) {
@@ -49,38 +66,62 @@ export class MultiSelect {
 
   toggleItem(item: MultiSelectOption, event: MouseEvent) {
     event.stopPropagation();
-    item.selected = !item.selected;
+    event.preventDefault(); // Добавил preventDefault
+
+    if (this.selectedItems.has(item.id)) {
+      this.selectedItems.delete(item.id);
+    } else {
+      this.selectedItems.add(item.id);
+    }
+
     this.emitSelection();
   }
 
   removeItem(item: MultiSelectOption, event: MouseEvent) {
     event.stopPropagation();
-    item.selected = false;
+    event.preventDefault();
+    this.selectedItems.delete(item.id);
     this.emitSelection();
   }
 
   toggleSelectAll(event: MouseEvent) {
     event.stopPropagation();
-    const allSelected = this.areAllSelected();
-    const newSelectedState = !allSelected;
+    event.preventDefault();
 
-    // Применяем только к отфильтрованным элементам? Или ко всем?
-    // Обычно — ко всем видимым (filteredItems), но можно и ко всем.
-    // Здесь — ко всем **отображаемым** (filteredItems), чтобы не выбирать скрытые
-    this.filteredItems.forEach(item => item.selected = newSelectedState);
+    const allFilteredSelected = this.areAllFilteredSelected();
 
-    // Но важно: обновить оригинальный массив `items` тоже!
-    // Так как filteredItems — это ссылки на те же объекты
+    if (allFilteredSelected) {
+      // Снимаем выделение со всех отфильтрованных элементов
+      this.filteredItems.forEach(item => {
+        this.selectedItems.delete(item.id);
+      });
+    } else {
+      // Выделяем все отфильтрованные элементы
+      this.filteredItems.forEach(item => {
+        this.selectedItems.add(item.id);
+      });
+    }
+
     this.emitSelection();
   }
 
-  areAllSelected(): boolean {
-    const visibleSelected = this.filteredItems.filter(item => item.selected).length;
-    return visibleSelected > 0 && visibleSelected === this.filteredItems.length;
+  areAllFilteredSelected(): boolean {
+    if (this.filteredItems.length === 0) return false;
+    return this.filteredItems.every(item => this.selectedItems.has(item.id));
+  }
+
+  isItemSelected(item: MultiSelectOption): boolean {
+    return this.selectedItems.has(item.id);
   }
 
   private emitSelection() {
-    const selected = this.items.filter(i => i.selected);
+    const selected = this.items.filter(item => this.selectedItems.has(item.id));
+
+    // Обновляем свойство selected в исходных items
+    this.items.forEach(item => {
+      item.selected = this.selectedItems.has(item.id);
+    });
+
     this.selectionChange.emit(selected);
   }
 

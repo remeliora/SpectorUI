@@ -8,7 +8,7 @@ import {PageBodyDirective} from "../../data/services/page-body-directive";
 import {PageButtonsDirective} from "../../data/services/page-buttons-directive";
 import {PageLabelDirective} from "../../data/services/page-label-directive";
 import {PageLayout} from "../../shared/components/layouts/page-layout/page-layout";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ParameterService} from '../../data/services/parameter-service';
 import {Select} from '../../shared/components/selects/select/select';
 import {DeviceTypeService} from '../../data/services/device-type-service';
@@ -19,6 +19,7 @@ import {EnumOption} from '../../data/services/interfaces/enum/enum-option';
 import {MultiSelect} from '../../shared/components/selects/multi-select/multi-select';
 import {MultiSelectOption} from '../../data/services/interfaces/select/multi-select-option';
 import {DeviceByDeviceType} from '../../data/services/interfaces/device/device-by-device-type';
+import {ParameterCreate} from '../../data/services/interfaces/parameter/parameter-create';
 
 @Component({
   selector: 'app-parameter-detail-page',
@@ -44,7 +45,6 @@ export class ParameterDetailPage {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private destroy$ = new Subject<void>();
-
 
   deviceTypeId!: number;
   parameterId: string | null = null;
@@ -162,6 +162,7 @@ export class ParameterDetailPage {
   onDevicesSelectionChange(selectedOptions: MultiSelectOption[]): void {
     const selectedIds = selectedOptions.map(option => option.id);
     this.form.patchValue({ activeDevicesId: selectedIds });
+    this.form.get('activeDevicesId')?.markAsTouched();
   }
 
   private updateNavbar(): void {
@@ -173,10 +174,92 @@ export class ParameterDetailPage {
     });
   }
 
+  onSave(): void {
+    if (this.form.valid && !this.isLoading) {
+      this.isLoading = true;
+      const formValue = this.form.value;
 
+      // Подготовка данных для отправки
+      const parameterData = {
+        name: formValue.name || '',
+        address: formValue.address || '',
+        metric: formValue.metric || '',
+        additive: Number(formValue.additive) || 0,
+        coefficient: Number(formValue.coefficient) || 1,
+        description: formValue.description || '',
+        dataType: formValue.dataType || '',
+        activeDevicesId: formValue.activeDevicesId || []
+      };
+
+      const request$ = this.isEditMode && this.parameterId && this.parameterId !== 'new'
+        ? this.parameterService.updateParameter(
+          this.deviceTypeId,
+          Number(this.parameterId),
+          { id: Number(this.parameterId), ...parameterData } as ParameterDetail
+        )
+        : this.parameterService.createParameter(
+          this.deviceTypeId,
+          parameterData as ParameterCreate
+        );
+
+      request$.pipe(takeUntil(this.destroy$)).subscribe({
+        next: (savedParameter) => {
+          this.isLoading = false;
+          // Можно показать сообщение об успехе
+          console.log('Parameter saved successfully:', savedParameter);
+          this.router.navigate(['/device-types', this.deviceTypeId, 'parameters']);
+        },
+        error: (error) => {
+          console.error('Error saving parameter:', error);
+          this.isLoading = false;
+          // Здесь можно добавить обработку ошибок (показать сообщение пользователю)
+        }
+      });
+    } else {
+      // Если форма невалидна, помечаем все поля как touched, чтобы показать ошибки
+      this.markFormGroupTouched(this.form);
+    }
+  }
 
   onCancel(): void {
     this.router.navigate(['/device-types', this.deviceTypeId, 'parameters']);
+  }
+
+  onDelete(): void {
+    if (this.isEditMode && this.parameterId && this.parameterId !== 'new' && !this.isLoading) {
+      // Подтверждение удаления
+      const confirmed = confirm('Вы уверены, что хотите удалить этот параметр?');
+      if (!confirmed) return;
+
+      this.isLoading = true;
+      this.parameterService.deleteParameter(this.deviceTypeId, Number(this.parameterId))
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.isLoading = false;
+            // Можно показать сообщение об успешном удалении
+            console.log('Parameter deleted successfully');
+            this.router.navigate(['/device-types', this.deviceTypeId, 'parameters']);
+          },
+          error: (error) => {
+            console.error('Error deleting parameter:', error);
+            this.isLoading = false;
+            // Обработка ошибки удаления
+          }
+        });
+    }
+  }
+
+  // Вспомогательный метод для пометки всех полей формы как touched
+  private markFormGroupTouched(formGroup: any) {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      } else {
+        control.markAsTouched();
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,11 +1,13 @@
 <!-- multi-select.html -->
 <div class="multi-select-dropdown">
   <div class="input-container">
-    @for (item of items; track item.id) {
-      @if (item.selected) {
+    @for (item of getSelectedItems(); track item.id) {
+      @if (isItemSelected(item)) {
         <div class="selected-item">
           {{ item.mainInfo }}
-          <button (click)="removeItem(item, $event)">×</button>
+          <button
+            class="selected-item__button"
+            (click)="removeItem(item, $event)">×</button>
         </div>
       }
     }
@@ -22,20 +24,22 @@
     <div class="dropdown-list">
       <!-- Кнопка "Выбрать все" -->
       <div class="dropdown-item select-all" (click)="toggleSelectAll($event)">
-        <span class="checkbox" [class.checked]="areAllSelected()">
-          @if (areAllSelected()) {
+        <span class="checkbox" [class.checked]="areAllFilteredSelected()">
+          @if (areAllFilteredSelected()) {
             <span class="checkmark">✓</span>
           }
         </span>
-        <span><strong>{{ areAllSelected() ? 'Снять все' : 'Выбрать все' }}</strong></span>
+        <span>
+          <strong>{{ areAllFilteredSelected() ? 'Снять все' : 'Выбрать все' }}</strong>
+        </span>
       </div>
 
       <hr class="divider" />
 
       @for (item of filteredItems; track item.id) {
         <div class="dropdown-item" (click)="toggleItem(item, $event)">
-          <span class="checkbox" [class.checked]="item.selected">
-            @if (item.selected) {
+          <span class="checkbox" [class.checked]="isItemSelected(item)">
+            @if (isItemSelected(item)) {
               <span class="checkmark">✓</span>
             }
           </span>

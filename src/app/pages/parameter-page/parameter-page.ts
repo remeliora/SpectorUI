@@ -1,5 +1,5 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {Subject, takeUntil} from 'rxjs';
+import {forkJoin, Subject, takeUntil} from 'rxjs';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {NavbarService} from '../../data/services/navbar-service';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -13,6 +13,7 @@ import {DeviceTypeService} from '../../data/services/device-type-service';
 import {ParameterService} from '../../data/services/parameter-service';
 import {DeviceTypeDetail} from '../../data/services/interfaces/device-type/device-type-detail';
 import {ParameterCard} from '../../data/services/interfaces/parameter/parameter-card';
+import {EmptyLayout} from '../../shared/components/layouts/empty-layout/empty-layout';
 
 @Component({
   selector: 'app-parameter-page',
@@ -25,52 +26,75 @@ import {ParameterCard} from '../../data/services/interfaces/parameter/parameter-
     ReactiveFormsModule,
     ButtonAdd,
     ListOfTablesLayout,
-    RouterLink
+    RouterLink,
+    EmptyLayout
   ],
   templateUrl: './parameter-page.html',
   styleUrl: './parameter-page.scss'
 })
 export class ParameterPage implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private navbarService = inject(NavbarService);
-  private deviceTypeService = inject(DeviceTypeService);
-  private parameterService = inject(ParameterService);
+  // === SERVICES ===
+  private readonly destroy$ = new Subject<void>();
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly navbarService = inject(NavbarService);
+  private readonly deviceTypeService = inject(DeviceTypeService);
+  private readonly parameterService = inject(ParameterService);
 
-  deviceTypeId!: number;
-  deviceType!: DeviceTypeDetail;
+  // === STATES ===
+  deviceTypeId: number | null = null;
+  deviceType: DeviceTypeDetail | null = null;
   parameters: ParameterCard[] = [];
 
+  // === ЖИЗНЕННЫЙ ЦИКЛ ===
   ngOnInit(): void {
     this.route.paramMap.pipe(
       takeUntil(this.destroy$)
     ).subscribe(params => {
-      this.deviceTypeId = Number(params.get('deviceTypeId'));
-      this.loadDeviceType();
-      this.loadParameters();
-      this.updateNavbar();
+      const idParam = params.get('deviceTypeId');
+      if (idParam) {
+        this.deviceTypeId = Number(idParam);
+        if (!isNaN(this.deviceTypeId)) {
+          this.loadData();
+          this.updateNavbar();
+        } else {
+          console.error('Invalid deviceTypeId:', idParam);
+          // Можно перенаправить на 404 или показать ошибку
+        }
+      }
     });
   }
 
-  private loadDeviceType(): void {
-    this.deviceTypeService.getDeviceTypeById(this.deviceTypeId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(deviceType => {
-        this.deviceType = deviceType;
-      });
-  }
+  private loadData(): void {
+    if (this.deviceTypeId == null) return;
 
-  private loadParameters(): void {
-    this.parameterService.getParameters(this.deviceTypeId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(parameters => {
-        this.parameters = parameters;
-      });
+    // Загружаем оба списка параллельно
+    forkJoin({
+      deviceType: this.deviceTypeService.getDeviceTypeById(this.deviceTypeId),
+      parameters: this.parameterService.getParameters(this.deviceTypeId)
+    }).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
+      next: (result) => {
+        this.deviceType = result.deviceType;
+        this.parameters = result.parameters;
+      },
+      error: (error) => {
+        console.error('Error loading data:', error);
+        this.deviceType = null;
+        this.parameters = [];
+      }
+    });
   }
 
   onParameterDblClick(parameterId: number): void {
     this.router.navigate(['/device-types', this.deviceTypeId, 'parameters', parameterId]);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.navbarService.resetConfig();
   }
 
   private updateNavbar(): void {
@@ -80,11 +104,5 @@ export class ParameterPage implements OnInit, OnDestroy {
       showBackButton: true,
       backRoute: `/device-types/${this.deviceTypeId}`,
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.navbarService.resetConfig();
   }
 }

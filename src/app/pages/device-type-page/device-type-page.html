@@ -15,6 +15,10 @@
           [mainInfo]="deviceTypeCard.name"
           [secondInfo]="deviceTypeCard.description"
           [editRoute]="['/device-types', deviceTypeCard.id]"></app-card>
+      } @empty {
+        <app-empty-layout
+          [errorMessage]="'Добавьте тип устройства для отображения'">
+        </app-empty-layout>
       }
     </app-list-of-cards-layout>
   </ng-template>

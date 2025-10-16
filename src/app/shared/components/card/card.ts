@@ -15,7 +15,7 @@ import {RouterLink} from '@angular/router';
 })
 export class Card {
   @Input() mainInfo!: string;
-  @Input() secondInfo!: string;
+  @Input() secondInfo!: string | number;
 
   @Input() showSwitch: boolean = false;
   // @Input() isSwitchOn: boolean = false;

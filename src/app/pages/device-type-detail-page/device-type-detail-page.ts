@@ -40,12 +40,12 @@ export class DeviceTypeDetailPage implements OnInit, OnDestroy {
   isLoading = false;
   isNotFound = false;
 
-  deviceTypeFormBuilder = inject(FormBuilder)
+  deviceTypeFormBuilder = inject(FormBuilder);
   form = this.deviceTypeFormBuilder.group({
     name: ['', Validators.required],
     className: [''],
     description: ['']
-  })
+  });
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
