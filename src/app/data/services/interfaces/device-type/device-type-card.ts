@@ -1,5 +1,5 @@
 export interface DeviceTypeCard {
-  id: bigint;
+  id: number;
   name: string;
   className: string;
   description: string;

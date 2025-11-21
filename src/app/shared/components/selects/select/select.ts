@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-select',
@@ -7,6 +7,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   styleUrl: './select.scss'
 })
 export class Select<T = any> {
+  @ViewChild('selectWrapper', {static: true}) selectWrapperRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('selectMenu', {static: false}) selectMenuRef?: ElementRef<HTMLDivElement>;
   // Массив опций любого типа
   @Input() options: T[] = [];
 
@@ -22,6 +24,9 @@ export class Select<T = any> {
   // Текущее выбранное значение
   @Input() selectedValue: any = null;
 
+  // Для обработки клика по опции
+  @Input() onOptionClick?: (option: T, event: Event) => boolean | void;
+
   // Событие выбора (возвращает весь объект или значение)
   @Output() selected = new EventEmitter<T>();
 
@@ -29,6 +34,9 @@ export class Select<T = any> {
   @Output() valueChange = new EventEmitter<any>();
 
   isOpen = false;
+
+  constructor(private renderer: Renderer2) {
+  }
 
   // Получаем отображаемый текст для опции
   getDisplayText(option: T): string {
@@ -46,7 +54,7 @@ export class Select<T = any> {
     return String(option);
   }
 
-  // Получаем значение опции (новый метод)
+  // Получаем значение опции
   getOptionValue(option: T): any {
     if (typeof option === 'string') {
       return option;
@@ -85,23 +93,52 @@ export class Select<T = any> {
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      setTimeout(() => {
+        this.positionDropdown();
+        if (this.selectMenuRef) {
+          this.renderer.addClass(this.selectMenuRef.nativeElement, 'visible'); // Показываем
+        }
+      }, 0);
+    } else {
+      if (this.selectMenuRef) {
+        this.renderer.removeClass(this.selectMenuRef.nativeElement, 'visible'); // Скрываем
+      }
+    }
   }
 
-  // Исправленная функция selectOption
-  selectOption(option: T) {
+  selectOption(option: T, event: Event) {
+    if (this.onOptionClick) {
+      // Если предоставлен обработчик, вызываем его
+      const result = this.onOptionClick(option, event);
+      // Проверяем результат: если он false, то не продолжаем стандартный выбор
+      if (result === false) {
+        // Не обновляем selectedValue, не эмитим события, не закрываем
+        console.log('Selection cancelled by onOptionClick handler.');
+        return;
+      }
+    }
+
+    // Стандартное поведение (или если onOptionClick не предоставлен или не вернул false)
     const value = this.getOptionValue(option);
     this.selectedValue = value;
-
-    // Эмитим события
     this.selected.emit(option);
     this.valueChange.emit(value);
-
     this.isOpen = false;
+
     console.log('Selected option:', option);
     console.log('Selected value:', value);
   }
 
+  // Метод для позиционирования выпадающего списка
+  private positionDropdown() {
+    if (!this.selectMenuRef || !this.selectWrapperRef) return;
+  }
+
   closeDropdown() {
     this.isOpen = false;
+    if (this.selectMenuRef) {
+      this.renderer.removeClass(this.selectMenuRef.nativeElement, 'visible');
+    }
   }
 }

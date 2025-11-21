@@ -1,0 +1,10 @@
+<!-- switch.html -->
+<div class="switch-container">
+  <label class="switch" [class.disabled]="disabled">
+    <input type="checkbox"
+           [checked]="value"
+           [disabled]="disabled"
+           (change)="onToggle($event)">
+    <span class="switch__slider"></span>
+  </label>
+</div>

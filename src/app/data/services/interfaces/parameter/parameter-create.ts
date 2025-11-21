@@ -7,4 +7,5 @@ export interface ParameterCreate {
   description: string;
   dataType: string;
   activeDevicesId: number[];
+  statusDictionaryId: number;
 }

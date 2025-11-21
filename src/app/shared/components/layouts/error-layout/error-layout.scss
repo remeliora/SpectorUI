@@ -1,0 +1,14 @@
+:host {
+  display: grid;
+  grid-template-rows: 150px 1fr;
+}
+
+.header-error-logo {
+  color: var(--primary-color);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+  //line-height: 35px;
+  font-weight: 500;
+}

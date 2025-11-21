@@ -11,4 +11,9 @@
       <span>Удалить</span>
     </button>
   }
+  @if (showReset) {
+    <button class="function-button__reset" (click)="onReset.emit()">
+      <span>Сбросить</span>
+    </button>
+  }
 </div>

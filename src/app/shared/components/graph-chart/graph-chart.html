@@ -1,0 +1,8 @@
+<!-- graph-chart.html -->
+<div highchartsChart
+     [options]="chartOptions"
+     [(update)]="updateFlag"
+     [oneToOne]="oneToOneFlag"
+     (chartInstance)="onChartInstance($event)"
+     #chart>
+</div>

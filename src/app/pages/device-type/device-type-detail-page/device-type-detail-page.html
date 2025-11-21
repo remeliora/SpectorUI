@@ -1,0 +1,80 @@
+<!-- device-type-detail-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel>
+    @if (deviceType(); as deviceType) {
+      {{ deviceType.name }}
+    } @else {
+      Новый тип устройства
+    }
+  </ng-template>
+
+  <ng-template appButtons></ng-template>
+
+  <ng-template appBody>
+    <app-detail-info-layout>
+      <form action="" class="form-container" [formGroup]="form">
+        <div class="form-content">
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+            Название
+            </span>
+            <input class="form-label-container__input"
+                   type="text" formControlName="name">
+            @if (form.get('name')?.invalid && form.get('name')?.touched) {
+              <div class="form-label-container-error-message">
+                @if (form.get('name')?.errors?.['required']) {
+                  Название обязательно
+                }
+                @if (form.get('name')?.errors?.['maxlength']) {
+                  Максимальная длина 100 символов
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Класс
+            </span>
+            <input class="form-label-container__input"
+                   type="text" formControlName="className">
+            @if (form.get('className')?.invalid && form.get('className')?.touched) {
+              <div class="form-label-container-error-message">
+                @if (form.get('className')?.errors?.['maxlength']) {
+                  Максимальная длина 50 символов
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Описание
+            </span>
+            <textarea class="form-label-container__textarea"
+                      type="text" formControlName="description">
+            </textarea>
+            @if (form.get('description')?.invalid && form.get('description')?.touched) {
+              <div class="form-label-container-error-message">
+                @if (form.get('description')?.errors?.['maxlength']) {
+                  Максимальная длина 500 символов
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="buttons-container">
+          <app-menu-function-button
+            [showDelete]="isEditMode()"
+            (onSave)="onSave()"
+            (onCancel)="onCancel()"
+            (onDelete)="onDelete()">
+          </app-menu-function-button>
+        </div>
+      </form>
+    </app-detail-info-layout>
+  </ng-template>
+
+</app-page-layout>

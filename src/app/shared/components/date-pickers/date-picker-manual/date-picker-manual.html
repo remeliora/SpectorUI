@@ -1,0 +1,24 @@
+<!-- date-picker-manual.html -->
+<div class="date-picker-manual-container">
+  <form class="date-picker-manual__form">
+    <div class="date-picker-manual__form-group">
+      <div class="date-picker-manual__text-container">
+        <span>C</span>
+      </div>
+      <input type="datetime-local"
+             class="manual-input"
+             [value]="from"
+             (change)="onFromDateChange($event)">
+    </div>
+
+    <div class="date-picker-manual__form-group">
+      <div class="date-picker-manual__text-container">
+        <span>По</span>
+      </div>
+      <input type="datetime-local"
+             class="manual-input"
+             [value]="to"
+             (change)="onToDateChange($event)">
+    </div>
+  </form>
+</div>

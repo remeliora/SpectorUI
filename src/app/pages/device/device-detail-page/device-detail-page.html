@@ -1,0 +1,203 @@
+<!--device-detail-page.html-->
+<app-page-layout>
+
+  <ng-template appLabel>
+    @if (device(); as devices) {
+      {{ devices.name }}
+    } @else {
+      Новое оборудование
+    }
+  </ng-template>
+
+  <ng-template appButtons></ng-template>
+
+  <ng-template appBody>
+    <app-detail-info-layout>
+      <form action="" class="form-container" [formGroup]="form">
+        <div class="form-content">
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Название
+            </span>
+            <input class="form-label-container__input"
+                   type="text"
+                   formControlName="name">
+            @if (form.get('name')?.invalid && (form.get('name')?.touched)) {
+              <div class="form-label-container-error-message">
+                @if (form.get('name')?.errors?.['required']) {
+                  <span>Название обязательно</span>
+                }
+                @if (form.get('name')?.errors?.['maxlength']) {
+                  <span>Максимальная длина 100 символов</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              IP-адрес
+            </span>
+            <input class="form-label-container__input"
+                   type="text"
+                   formControlName="ipAddress">
+            @if (form.get('ipAddress')?.invalid && (form.get('ipAddress')?.touched)) {
+              <div class="form-label-container-error-message">
+                @if (form.get('ipAddress')?.errors?.['required']) {
+                  <span>IP-адрес обязателен</span>
+                }
+                @if (form.get('ipAddress')?.errors?.['maxlength']) {
+                  <span>Максимальная длина 100 символов</span>
+                }
+                @if (form.get('ipAddress')?.errors?.['ip']) {
+                  <span>Неверный формат IP-адреса (пример: 192.168.1.1)</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Тип устройства
+            </span>
+            <app-select
+              [options]="deviceTypes()"
+              [displayField]="'name'"
+              [valueField]="'id'"
+              [placeholder]="'Выберите тип устройства'"
+              [selectedValue]="form.get('deviceTypeId')?.value"
+              (valueChange)="onDeviceTypeChange($event)"
+              [class.error]="form.get('deviceTypeId')?.invalid && form.get('deviceTypeId')?.touched">
+            </app-select>
+            @if (form.get('deviceTypeId')?.invalid && (form.get('deviceTypeId')?.touched)) {
+              <div class="form-label-container-error-message">
+                @if (form.get('deviceTypeId')?.errors?.['required']) {
+                  <span>Тип устройств обязателен</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Локация
+            </span>
+            <app-select
+              [options]="locations()"
+              [displayField]="'this'"
+              [valueField]="'this'"
+              [placeholder]="'Выберите локацию'"
+              [selectedValue]="form.get('location')?.value"
+              (valueChange)="onLocationChange($event)"
+              [class.error]="form.get('location')?.invalid && form.get('location')?.touched">
+            </app-select>
+            @if (form.get('location')?.invalid && (form.get('location')?.touched)) {
+              <div class="form-label-container-error-message">
+                @if (form.get('location')?.errors?.['required']) {
+                  <span>Локация обязательна</span>
+                }
+                @if (form.get('location')?.errors?.['maxlength']) {
+                  <span>Максимальная длина 100 символов</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Тип тревоги
+            </span>
+            <app-select
+              [options]="alarmTypes()"
+              [displayField]="'displayName'"
+              [valueField]="'name'"
+              [placeholder]="'Выберите тип тревоги'"
+              [selectedValue]="form.get('alarmType')?.value"
+              (valueChange)="onAlarmTypeChange($event)"
+              [class.error]="form.get('alarmType')?.invalid && form.get('alarmType')?.touched">
+            </app-select>
+            @if (form.get('alarmType')?.invalid && (form.get('alarmType')?.touched)) {
+              <div class="form-label-container-error-message">
+                @if (form.get('alarmType')?.errors?.['required']) {
+                  <span>Тип тревоги обязателен</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Период
+            </span>
+            <input class="form-label-container__input"
+                   type="text"
+                   formControlName="period"
+                   (keydown)="onKeyDown($event)">
+            @if (form.get('period')?.invalid && (form.get('period')?.touched)) {
+              <div class="form-label-container-error-message">
+                @if (form.get('period')?.errors?.['required']) {
+                  <span>Период обязателен</span>
+                }
+                @if (form.get('period')?.errors?.['min']) {
+                  <span>Значение не может быть отрицательным</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Состояние
+            </span>
+            <div class="form-label-container__switch">
+              <app-switch-for-form
+                formControlName="isEnable"
+
+                [disabled]="true">
+              </app-switch-for-form>
+            </div>
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Описание
+            </span>
+            <textarea class="form-label-container__textarea"
+                      type="text"
+                      formControlName="description">
+            </textarea>
+            @if (form.get('description')?.invalid && (form.get('description')?.touched)) {
+              <div class="form-label-container-error-message">
+                @if (form.get('description')?.errors?.['maxlength']) {
+                  <span>Максимальная длина 500 символов</span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Выбрать параметр
+            </span>
+            <app-multi-select
+              [items]="parameters()"
+              (selectionChange)="onParametersSelectionChange($event)">
+            </app-multi-select>
+          </div>
+
+        </div>
+
+        <div class="buttons-container">
+          <app-menu-function-button
+            [showDelete]="isEditMode()"
+            (onSave)="onSave()"
+            (onDelete)="onDelete()"
+            (onCancel)="onCancel()">
+          </app-menu-function-button>
+        </div>
+      </form>
+    </app-detail-info-layout>
+  </ng-template>
+
+</app-page-layout>

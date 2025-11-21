@@ -1,0 +1,23 @@
+.graph-menu-container {
+  padding: 0 0 20px 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.graph-menu__back-button-container {
+  display: grid;
+  width: 100%;
+}
+
+.graph-menu__list-container {
+  display: block;
+  height: 624px;
+  overflow: auto;
+  // Скрываем скроллбар но оставляем функциональность
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}

@@ -1,0 +1,51 @@
+<!-- setting-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel>Настройки</ng-template>
+
+  <ng-template appButtons></ng-template>
+
+  <ng-template appBody>
+    <app-detail-info-layout>
+      <form action="" class="form-container" [formGroup]="form">
+        <div class="form-content">
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Опрос оборудования
+            </span>
+            <div class="form-label-container__switch">
+              <app-switch-for-form
+                formControlName="pollActive"
+                [disabled]="false">
+              </app-switch-for-form>
+            </div>
+          </div>
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Сообщать об ошибках
+            </span>
+            <div class="form-label-container__switch">
+              <app-switch-for-form
+                formControlName="alarmActive"
+                [disabled]="false">
+              </app-switch-for-form>
+            </div>
+          </div>
+        </div>
+
+        <div class="buttons-container">
+          <app-menu-function-button
+            [showDelete]="false"
+            [showReset]="true"
+            (onSave)="onSave()"
+            (onCancel)="onCancel()"
+            (onReset)="onReset()">
+          </app-menu-function-button>
+        </div>
+      </form>
+    </app-detail-info-layout>
+  </ng-template>
+
+</app-page-layout>
+

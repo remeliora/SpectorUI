@@ -1,0 +1,28 @@
+<!-- status-dictionary-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel></ng-template>
+
+  <ng-template appButtons>
+    <app-button-add [routerLink]="['/status-dictionaries/new']"></app-button-add>
+  </ng-template>
+
+  <ng-template appBody>
+    <app-list-of-cards-layout>
+      @for (statusDictionaryCard of statusDictionaryCards(); track statusDictionaryCard.id) {
+        <app-card
+          [mainInfo]="statusDictionaryCard.name"
+          [secondInfo]="'Количество статусов: ' + statusDictionaryCard.count"
+          [editRoute]="['/status-dictionaries', statusDictionaryCard.id]">
+        </app-card>
+      }
+      @empty {
+        <app-empty-layout
+          [errorMessage]="'Добавить словарь для отображения'">
+        </app-empty-layout>
+      }
+
+    </app-list-of-cards-layout>
+  </ng-template>
+
+</app-page-layout>

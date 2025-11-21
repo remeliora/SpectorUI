@@ -2,5 +2,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
-  min-height: min-content; // Важно для правильной работы прокрутки
+  min-height: min-content;
+  position: relative;
 }

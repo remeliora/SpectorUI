@@ -1,0 +1,42 @@
+<!-- date-picker-auto.html -->
+<div class="date-picker-auto-container">
+  <form class="date-picker-auto__form">
+    <div class="date-picker-auto__form-label">
+      <span>Интервал</span>
+    </div>
+
+    <input type="number"
+           class="date-picker-auto__form-input"
+           [placeholder]="placeholder"
+           [min]="min"
+           [max]="max"
+           [value]="selectedValue"
+           (input)="onValueChange($event)"
+           (keydown)="onKeyDown($event)">
+
+    <div class="date-picker-auto__form-select">
+      <div class="date-picker-auto-select__container">
+        <div class="date-picker-auto-select__wrapper" (click)="toggleDropdown()">
+          <div class="date-picker-auto-select__option">
+            {{ getSelectedUnitLabel() }}
+          </div>
+          @if (isOpen) {
+            <div class="date-picker-auto-select__menu-list">
+              <ul class="date-picker-auto-option__item">
+                @for (unit of timeUnits; track unit.value) {
+                  <li
+                    class="date-picker-auto-option__label"
+                    (click)="selectUnit(unit); $event.stopPropagation()">
+                    <a>
+                      {{ unit.label }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

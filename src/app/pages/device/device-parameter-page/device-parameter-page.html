@@ -1,0 +1,40 @@
+<!-- device-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel>
+    {{ deviceName() }}
+  </ng-template>
+
+  <ng-template appButtons>
+    <app-button-return [routerLink]="['/devices']"></app-button-return>
+  </ng-template>
+
+  <ng-template appBody>
+    <app-list-of-tables-layout>
+      @if (isLoading()) {
+        <app-loader></app-loader>
+      } @else {
+        <div class="bar-container">
+          <div class="bar__header">
+            <strong>Параметр</strong>
+            <strong>Значение</strong>
+            <strong>Описание</strong>
+          </div>
+          <div class="bar__body">
+            @for (param of deviceParameters(); track param.id) {
+              <app-bar
+                [name]="param.name"
+                [value]="param.value"
+                [metric]="param.metric"
+                [description]="param.description"
+                [indicatorStatus]="mapStatusToIndicator(param.status)">
+              </app-bar>
+            }
+          </div>
+        </div>
+      }
+    </app-list-of-tables-layout>
+
+  </ng-template>
+
+</app-page-layout>

@@ -1,5 +1,5 @@
 export interface DeviceTypeDetail {
-  id: bigint;
+  id: number;
   name: string;
   className: string;
   description: string;

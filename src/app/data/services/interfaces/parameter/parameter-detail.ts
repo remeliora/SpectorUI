@@ -8,4 +8,5 @@ export interface ParameterDetail {
   description: string;
   dataType: string;
   activeDevicesId: number[];
+  statusDictionaryId: number;
 }

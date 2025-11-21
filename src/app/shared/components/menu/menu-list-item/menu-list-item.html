@@ -1,0 +1,10 @@
+<!-- menu-list-item.html -->
+<div class="graph-menu-container">
+  <div class="graph-menu__back-button-container">
+    <app-menu-back-button
+      (backClicked)="navigateBack()"></app-menu-back-button>
+  </div>
+  <div class="graph-menu__list-container">
+    <app-multi-list-select [devices]="devices()"></app-multi-list-select>
+  </div>
+</div>

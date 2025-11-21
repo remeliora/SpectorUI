@@ -8,7 +8,6 @@
 
 .select__wrapper {
   width: 100%;
-  //cursor: pointer;
   position: relative;
   color: var(--text-primary);
   background-color: var(--bg-primary);
@@ -38,6 +37,7 @@
 
 .select__menu-list {
   position: absolute;
+  z-index: 1000;
   overflow: auto;
   width: 100%;
   margin: 10px 0;

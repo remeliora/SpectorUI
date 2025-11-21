@@ -1,17 +1,21 @@
 <!-- card.html -->
-<button class="card__container">
+<button class="card__container" (dblclick)="onCardDblClick($event)">
   <div class="info__container" >
     <strong class="info__main">{{ mainInfo }}</strong>
     <p class="info__secondary">{{ secondInfo }}</p>
   </div>
-  <div class="switch-container">
+  <div class="switch-card-container">
     @if (showSwitch) {
-      <app-switch></app-switch>
+      <app-switch
+        [value]="isSwitchOn"
+        (valueChange)="onSwitchToggled($event)"
+        [disabled]="false">
+      </app-switch>
     }
   </div>
   <div class="indicator-container">
     @if (showIndicator) {
-      <div class="indicator"></div>
+      <div class="indicator" [class]="indicatorStatus"></div>
     }
   </div>
   <div class="button-edit__container">

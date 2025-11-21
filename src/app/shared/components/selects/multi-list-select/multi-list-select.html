@@ -1,0 +1,54 @@
+<!-- multi-list-select.html -->
+<div class="multi-list-select-container">
+  <!-- Используем transformedDevices() -->
+  @for (device of transformedDevices(); track device.id) {
+    <div class="multi-list-item">
+      <div class="multi-list__header"
+           [class.active]="isDeviceActive(device.id)"
+           (click)="toggleDeviceParameters(device.id, $event)">
+        <div class="device-info">
+          <div class="device-main-info">
+            <span>{{ device.name }}</span>
+          </div>
+          <div class="device-second-info">
+            <span>{{ device.ipAddress }}</span>
+          </div>
+        </div>
+        <div class="device-select-container">
+          <div
+            class="custom-checkbox"
+            [class.checked]="getCheckboxState(device.id) === 'checked'"
+            [class.indeterminate]="getCheckboxState(device.id) === 'indeterminate'"
+            (click)="toggleDevice(device.id, $event)">
+            @if (getCheckboxState(device.id) === 'checked') {
+              <span class="custom-checkmark">✓</span>
+            } @else if (getCheckboxState(device.id) === 'indeterminate') {
+              <span class="custom-checkmark">-</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      @if (isDeviceParametersVisible(device.id)) {
+        <div class="multi-list-item-select__dropdown">
+          <!-- Используем uniqueKey в track -->
+          @for (param of device.parameters; track param.uniqueKey) {
+            <div class="multi-list-item-select__dropdown-item">
+              <div class="parameter-info">
+                <span>{{ param.description }}</span>
+              </div>
+              <div
+                class="custom-checkbox"
+                [class.checked]="getParameterCheckboxState(device.id, param.id)"
+                (click)="toggleParameter(device.id, param.id, $event)">
+                @if (getParameterCheckboxState(device.id, param.id)) {
+                  <span class="custom-checkmark">✓</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,41 @@
+<!-- device-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel></ng-template>
+
+  <ng-template appButtons>
+    <app-button-graph [routerLink]="['/graphs']"></app-button-graph>
+    <app-button-add [routerLink]="['/devices/new']"></app-button-add>
+  </ng-template>
+
+  <ng-template appBody>
+    <app-list-of-cards-layout>
+      @if (isLoading()) {
+        <app-loader></app-loader>
+      }
+      @else {
+        @for (deviceCard of deviceCards(); track deviceCard.deviceId) {
+          <app-card
+            [deviceId]="deviceCard.deviceId"
+            [mainInfo]="deviceCard.deviceName"
+            [secondInfo]="deviceCard.deviceIp"
+            [editRoute]="['/devices', deviceCard.deviceId]"
+            [showSwitch]="true"
+            [isSwitchOn]="deviceCard.isEnable"
+            [isDeviceEnabled]="deviceCard.isEnable"
+            (onSwitchChange)="onDeviceSwitchChange(deviceCard.deviceId, $event)"
+            [showIndicator]="true"
+            [indicatorStatus]="mapStatusToIndicator(deviceCard.status)"
+            [onCardDoubleClick]="onCardDoubleClick">
+          </app-card>
+        }
+        @empty {
+          <app-empty-layout
+            [errorMessage]="'Добавьте тип устройства для отображения'">
+          </app-empty-layout>
+        }
+      }
+    </app-list-of-cards-layout>
+  </ng-template>
+
+</app-page-layout>

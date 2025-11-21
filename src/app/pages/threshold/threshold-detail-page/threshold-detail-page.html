@@ -1,0 +1,143 @@
+<!-- threshold-detail-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel>
+    @if (device(); as device) {
+      {{ isEditMode() ? 'Редактировать порог' : 'Создать порог' }} для {{ device.name }}
+    } @else {
+      Загрузка...
+    }
+  </ng-template>
+
+  <ng-template appButtons></ng-template>
+
+  <ng-template appBody>
+    <app-detail-info-layout>
+      <form action="" class="form-container" [formGroup]="form">
+        <div class="form-content">
+
+          @if (isEditMode()) {
+            <div class="form-label-container">
+              <span class="form-label-container__label">
+                Параметр
+              </span>
+              <div class="form-label-container__input-static">
+                @if (selectedParameter(); as param) {
+                  {{ param.description }}
+                } @else {
+                  Загрузка параметра...
+                }
+              </div>
+            </div>
+          } @else {
+            <div class="form-label-container">
+              <span class="form-label-container__label">
+                Параметр
+              </span>
+              <app-select
+                [options]="availableParameters()"
+                [displayField]="'description'"
+                [valueField]="'id'"
+                [placeholder]="'Выберите параметр'"
+                [selectedValue]="form.get('parameterId')?.value"
+                (valueChange)="onParameterChange($event)"
+                [class.error]="form.get('parameterId')?.invalid && form.get('parameterId')?.touched">
+              </app-select>
+              @if (form.get('parameterId')?.invalid && (form.get('parameterId')?.touched)) {
+                <div class="form-label-container-error-message">
+                  @if (form.get('parameterId')?.errors?.['required']) {
+                    <span>Параметр обязателен</span>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          @if (!isParameterEnumerated()) {
+            <div class="form-label-container">
+              <span class="form-label-container__label">
+                Минимальный порог
+              </span>
+              <input class="form-label-container__input"
+                     type="text"
+                     formControlName="lowValue"
+                     (keydown)="onKeyDown($event)">
+              @if (form.get('lowValue')?.invalid && (form.get('lowValue')?.touched)) {
+                <div class="form-label-container-error-message">
+                  @if (form.get('lowValue')?.errors?.['required']) {
+                    <span>Минимальный порог обязателен</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-label-container">
+              <span class="form-label-container__label">
+                Максимальный порог
+              </span>
+              <input class="form-label-container__input"
+                     type="text"
+                     formControlName="highValue"
+                     (keydown)="onKeyDown($event)">
+              @if (form.get('highValue')?.invalid && (form.get('highValue')?.touched)) {
+                <div class="form-label-container-error-message">
+                  @if (form.get('highValue')?.errors?.['required']) {
+                    <span>Максимальный порог обязателен</span>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          @if (isParameterEnumerated()) {
+            <div class="form-label-container">
+              <span class="form-label-container__label">
+                Точное совпадение
+              </span>
+              <app-select
+                [options]="getMatchExactSelectOptions()"
+                [displayField]="'value'"
+                [valueField]="'value'"
+                [placeholder]="'Выберите статус'"
+                [selectedValue]="form.get('matchExact')?.value"
+                (valueChange)="onMatchExactChange($event)"
+                [class.error]="form.get('matchExact')?.invalid && form.get('matchExact')?.touched">>
+              </app-select>
+              @if (form.get('matchExact')?.invalid && (form.get('matchExact')?.touched)) {
+                <div class="form-label-container-error-message">
+                  @if (form.get('matchExact')?.errors?.['required']) {
+                    <span>Значение статуса обязательно</span>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          <div class="form-label-container">
+            <span class="form-label-container__label">
+              Включено
+            </span>
+            <div class="form-label-container__switch">
+              <app-switch-for-form
+                formControlName="isEnable"
+                [disabled]="false">
+              </app-switch-for-form>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="buttons-container">
+          <app-menu-function-button
+            [showDelete]="isEditMode()"
+            (onSave)="onSave()"
+            (onDelete)="onDelete()"
+            (onCancel)="onCancel()">
+          </app-menu-function-button>
+        </div>
+      </form>
+    </app-detail-info-layout>
+  </ng-template>
+
+</app-page-layout>
+

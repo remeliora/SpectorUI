@@ -3,6 +3,5 @@ export interface ParameterCard {
   name: string;
   address: string;
   metric: string;
-  dataType: string;
   description: string;
 }

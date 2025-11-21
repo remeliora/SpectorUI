@@ -1,0 +1,9 @@
+<!-- button-return.html -->
+<div class="button-return__container">
+  <button class="button-return"
+          [routerLink]="routerLink"
+          (click)="onClick.emit($event)">
+    <svg icon="return" class="button-return__icon"></svg>
+    <strong class="button-return__name">Закрыть</strong>
+  </button>
+</div>

@@ -3,7 +3,16 @@
   <strong>SPECTOR</strong>
 </header>
 
-<app-navbar></app-navbar>
+@if (!isChartPage()) {
+  <div class="content-container">
+    <app-navbar></app-navbar>
+  </div>
+} @else {
+  <div class="content-container">
+    <app-menu-list-item></app-menu-list-item>
+  </div>
+}
+
 
 <footer class="sidebar__footer">
   <div class="footer-button">

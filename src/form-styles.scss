@@ -45,6 +45,35 @@
   }
 }
 
+.form-label-container__input-static {
+  padding: 2px 12px;
+  border: 3px solid var(--inactive-buttom-color);
+  border-radius: 6px;
+
+  display: grid;
+  align-items: center;
+  justify-content: start;
+
+  font-family: "Inter", sans-serif;
+  line-height: 18px;
+  font-size: 18px;
+  font-weight: 300;
+
+  outline: none;
+  opacity: 1;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    border: 3px solid var(--primary-color);
+  }
+}
+
+.form-label-container__switch {
+  display: grid;
+  align-items: center;
+  justify-content: start;
+}
+
 .form-label-container__textarea {
   height: 200px;
   resize: none;

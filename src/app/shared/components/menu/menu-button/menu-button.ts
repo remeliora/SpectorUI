@@ -8,4 +8,5 @@ import {Component, Input} from '@angular/core';
 })
 export class MenuButton {
   @Input() label!: string;
+  @Input() isActive: boolean = false;
 }

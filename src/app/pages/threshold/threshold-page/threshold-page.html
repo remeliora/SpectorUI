@@ -1,0 +1,54 @@
+<!-- threshold-page.html -->
+<app-page-layout>
+
+  <ng-template appLabel>
+    @if (device(); as devices) {
+      {{ devices.name }}
+    } @else {
+      Загрузка...
+    }
+  </ng-template>
+
+  <ng-template appButtons>
+    <app-button-add
+      [routerLink]="['/devices', deviceId, 'thresholds', 'new']">
+    </app-button-add>
+  </ng-template>
+
+  <ng-template appBody>
+    <app-list-of-tables-layout>
+      <div class="threshold-table__container">
+        <div class="threshold-table__header">
+          <strong>Параметр</strong>
+          <strong>Нижний порог</strong>
+          <strong>Верхний порог</strong>
+          <strong>Точное совпадение</strong>
+          <strong>Состояние</strong>
+        </div>
+        <div class="threshold-table__body">
+          @for (threshold of thresholds(); track threshold.id) {
+            <button
+              class="threshold-table__row"
+              (dblclick)="onThresholdDblClick(threshold.id)">
+              <span>{{ threshold.parameterName || 'Неизвестный параметр' }}</span>
+              <span>{{ threshold.lowValue }}</span>
+              <span>{{ threshold.highValue }}</span>
+              <span>{{ threshold.matchExact }}</span>
+              <div class="threshold-table__status">
+                <app-switch-for-form
+                  [checked]="threshold.isEnable"
+                  [disabled]="true">
+                </app-switch-for-form>
+              </div>
+            </button>
+          } @empty {
+            <app-empty-layout
+              [errorMessage]="'Добавьте пороговое значение для отображения'">
+            </app-empty-layout>
+          }
+        </div>
+      </div>
+    </app-list-of-tables-layout>
+  </ng-template>
+
+</app-page-layout>

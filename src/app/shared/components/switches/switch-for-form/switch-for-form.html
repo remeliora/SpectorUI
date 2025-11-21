@@ -1,0 +1,11 @@
+<!-- switch-for-form.html -->
+<div class="switch-container">
+  <label class="switch" [class.disabled]="disabled">
+    <input type="checkbox"
+           [checked]="innerValue"
+           [disabled]="disabled"
+           (change)="onToggle($event)">
+    <span class="switch__slider"></span>
+  </label>
+</div>
+

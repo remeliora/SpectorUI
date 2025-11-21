@@ -1,0 +1,21 @@
+<!-- not-found-page.html -->
+<div class="http-error-page__container">
+  <div class="http-error-page__text">
+    <strong class="text__header">Ой!</strong>
+    <span class="text__main">Страница, которую вы ищите, не найдена</span>
+    <span class="text__error-code">Код ошибки: 404</span>
+    <div class="text__button-container">
+      <button class="navigate-button" (click)="onGoBack()">
+        <svg icon="go-back" class="go-back-icon"></svg>
+        <strong class="navigate-button__text">Вернуться назад</strong>
+      </button>
+      <button class="navigate-button" (click)="onGoHome()">
+        <svg icon="home" class="home-icon"></svg>
+        <strong class="navigate-button__text">На главную</strong>
+      </button>
+    </div>
+  </div>
+  <div class="http-error-page__image">
+    <svg icon="not-found" class="http-error-page__icon"></svg>
+  </div>
+</div>

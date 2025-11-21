@@ -20,6 +20,12 @@
   &:active {
     border: 3px solid var(--primary-color);
   }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none; // Отключает все события мыши
+    filter: grayscale(100%); // Делает карточку серой
+  }
 }
 
 .info__container {
@@ -51,6 +57,22 @@
   border: none;
   border-radius: 25px;
   background-color: var(--indicate-green);
+
+  &.success {
+    background-color: var(--indicate-green);
+  }
+
+  &.warning {
+    background-color: var(--indicate-yellow);
+  }
+
+  &.error {
+    background-color: var(--indicate-red);
+  }
+
+  &.neutral {
+    background-color: var(--indicate-grey);
+  }
 }
 
 .button-edit {

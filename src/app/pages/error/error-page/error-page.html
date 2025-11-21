@@ -1,0 +1,21 @@
+<!-- error-page.html -->
+<div class="http-error-page__container">
+  <div class="http-error-page__text">
+    <strong class="text__header">{{ errorTitle }}</strong>
+    <span class="text__main">{{ errorMessage }}</span>
+    <span class="text__error-code">Код ошибки: {{ errorCode }}</span>
+    <div class="text__button-container">
+      <button class="navigate-button" (click)="onRefresh()">
+        <svg icon="reload" class="reload-icon"></svg>
+        <strong class="navigate-button__text">Обновить</strong>
+      </button>
+      <button class="navigate-button" (click)="onGoHome()">
+        <svg icon="home" class="home-icon"></svg>
+        <strong class="navigate-button__text">На главную</strong>
+      </button>
+    </div>
+  </div>
+  <div class="http-error-page__image">
+    <svg [icon]="errorCode" class="http-error-page__icon"></svg>
+  </div>
+</div>

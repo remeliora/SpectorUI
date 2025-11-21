@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ParameterCard} from './interfaces/parameter/parameter-card';
 import {ParameterDetail} from './interfaces/parameter/parameter-detail';
 import {ParameterCreate} from './interfaces/parameter/parameter-create';
+import {ParameterUpdate} from './interfaces/parameter/parameter-update';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class ParameterService {
     );
   }
 
-  updateParameter(deviceTypeId: number, parameterId: number, parameter: ParameterDetail) {
+  updateParameter(deviceTypeId: number, parameterId: number, parameter: ParameterUpdate) {
     return this.http.put<ParameterDetail>(
       `http://localhost:8080/api/v1/main/device-types/${deviceTypeId}/parameters/${parameterId}`,
       parameter
