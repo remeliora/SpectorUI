@@ -46,7 +46,7 @@ export const deviceDetailResolver: ResolveFn<DeviceDetailPageData> = (route, sta
   const numericId = Number(id);
   if (isNaN(numericId)) {
     console.error('Invalid deviceId:', id);
-    return of({ device: null, deviceTypes: [], locations: [], alarmTypes: [] });
+    return of({device: null, deviceTypes: [], locations: [], alarmTypes: []});
   }
 
   return forkJoin({

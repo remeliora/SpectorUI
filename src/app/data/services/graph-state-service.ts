@@ -29,7 +29,6 @@ export class GraphStateService {
   readonly selectedDeviceParameters = this._selectedDeviceParameters.asReadonly();
   readonly manualTimeRange = this._manualTimeRange.asReadonly();
   readonly autoTimeRange = this._autoTimeRange.asReadonly();
-  readonly timeRangeType = this._timeRangeType.asReadonly();
 
   // Вычисляемый сигнал для текущего временного диапазона (остаётся без изменений)
   readonly currentTimeRange = computed(() => {
@@ -68,41 +67,15 @@ export class GraphStateService {
     this._selectedDeviceParameters.set(filteredSelection);
   }
 
-  //
-  // updateDeviceSelection(deviceId: number, parameterIds: number[]): void {
-  //   const currentSelection = this._selectedDeviceParameters();
-  //   const existingIndex = currentSelection.findIndex(dp => dp.deviceId === deviceId);
-  //
-  //   let newSelection: DeviceParameterRequest[];
-  //   if (parameterIds.length > 0) {
-  //     if (existingIndex >= 0) {
-  //       newSelection = [...currentSelection];
-  //       newSelection[existingIndex] = {deviceId, parameterIds};
-  //     } else {
-  //       newSelection = [...currentSelection, {deviceId, parameterIds}];
-  //     }
-  //   } else {
-  //     if (existingIndex >= 0) {
-  //       newSelection = currentSelection.filter((_, index) => index !== existingIndex);
-  //     } else {
-  //       newSelection = currentSelection;
-  //     }
-  //   }
-  //
-  //   this._selectedDeviceParameters.set(newSelection);
-  // }
-
   // Метод построения графика - формирует и отправляет запрос через Subject
   buildChart(): void {
-    console.log('GraphStateService: вызван buildChart');
+    // console.log('GraphStateService: вызван buildChart');
     const request = this.getCurrentRequest();
     if (request) {
       console.log('GraphStateService: отправляем запрос на построение:', request);
       this.buildChartTrigger$.next(request); // <-- Отправляем запрос
     } else {
       console.log('GraphStateService: buildChart вызван, но запрос недействителен (null)');
-      // Можно отправить null или специальный сигнал, если нужно уведомить о "очистке"
-      // this.buildChartTrigger$.next(null);
     }
   }
 
@@ -141,19 +114,12 @@ export class GraphStateService {
     this._timeRangeType.set('auto');
   }
 
-  // setTimeRangeType(type: 'manual' | 'auto'): void {
-  //   this._timeRangeType.set(type);
-  // }
-
   // Метод для сброса всего состояния к начальному
   resetState(): void {
     this._selectedDeviceParameters.set([]);
     this._manualTimeRange.set({from: null, to: null});
     this._autoTimeRange.set({value: 1, unit: 'hour'});
     this._timeRangeType.set('auto');
-    // this._lastBuildRequest.set(null); // <-- Больше не нужно
     console.log('GraphStateService: Состояние сброшено');
-    // Опционально: уведомить GraphChart о сбросе
-    // this.buildChartTrigger$.next(null); // <-- Если нужно уведомить о сбросе
   }
 }

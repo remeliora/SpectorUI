@@ -28,7 +28,7 @@ export class MenuListItem {
       .subscribe({
         next: (data) => {
           this.devices.set(data);
-          console.log('Загруженные устройства:', data);
+          // console.log('Загруженные устройства:', data);
         },
         error: (error) => {
           console.error('Ошибка при загрузке устройств:', error);

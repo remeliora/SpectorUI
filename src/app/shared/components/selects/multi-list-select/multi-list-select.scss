@@ -1,9 +1,9 @@
 .multi-list-select-container {
-  padding: 0 40px;
   width: 100%;
   display: grid;
   align-items: center;
   gap: 10px;
+  min-height: min-content;
 }
 
 .multi-list-item {

@@ -9,7 +9,6 @@ import {ButtonCreate} from '../../shared/components/buttons/button-create/button
 import {ListOfTablesLayout} from '../../shared/components/layouts/list-of-tables-layout/list-of-tables-layout';
 import {GraphChart} from '../../shared/components/graph-chart/graph-chart';
 import {GraphStateService} from '../../data/services/graph-state-service';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-graph-page',
@@ -32,13 +31,10 @@ export class GraphPage {
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
-    // Подписка на requestChange$ была удалена из GraphStateService и больше не нужна здесь.
-    // Логика обновления графика теперь находится в GraphChart, который подписывается на сигнал buildRequest.
-
     // Добавляем сброс состояния при уничтожении компонента
     this.destroyRef.onDestroy(() => {
       console.log('GraphPage: Компонент уничтожается, сбрасываем состояние GraphStateService');
-      this.graphStateService.resetState(); // <-- Вызываем метод сброса
+      this.graphStateService.resetState();
     });
   }
 }

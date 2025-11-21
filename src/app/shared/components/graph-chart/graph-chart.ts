@@ -1,22 +1,11 @@
-import {
-  AfterViewInit,
-  Component,
-  computed,
-  DestroyRef,
-  effect,
-  inject,
-  signal,
-  untracked,
-  ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, DestroyRef, inject, signal, ViewChild} from '@angular/core';
 import * as Highcharts from 'highcharts';
 import {HighchartsChartDirective, providePartialHighcharts} from 'highcharts-angular';
 import {GraphStateService} from '../../../data/services/graph-state-service';
 import {GraphService} from '../../../data/services/graph-service';
 import {SeriesData} from '../../../data/services/interfaces/graph/series-data';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ChartDataRequest} from '../../../data/services/interfaces/graph/chart-data-request';
-import {Subject, switchMap} from 'rxjs';
+import {switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-graph-chart',
@@ -41,7 +30,6 @@ export class GraphChart implements AfterViewInit {
   chartData = signal<SeriesData[] | null>(null);
   isLoading = signal(false);
 
-  // Используем обычные переменные, как в документации
   updateFlag: boolean = false;
   oneToOneFlag: boolean = true;
 
@@ -81,7 +69,7 @@ export class GraphChart implements AfterViewInit {
       enabled: true,
       height: 40,
       adaptToUpdatedData: true,
-      handles: { backgroundColor: '#f7f7f7', borderColor: '#b2b1b6' },
+      handles: {backgroundColor: '#f7f7f7', borderColor: '#b2b1b6'},
       outlineColor: '#ccc',
       maskFill: 'rgba(100, 100, 100, 0.3)',
       xAxis: {
@@ -113,7 +101,7 @@ export class GraphChart implements AfterViewInit {
     }
   };
 
-  @ViewChild('chart', { static: false }) chartDirective?: HighchartsChartDirective;
+  @ViewChild('chart', {static: false}) chartDirective?: HighchartsChartDirective;
   private chartInstance: Highcharts.Chart | undefined;
 
   constructor() {
@@ -146,22 +134,16 @@ export class GraphChart implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // В v5 chartInstance output может не сработать сразу при ngAfterViewInit,
-    // но сработает, когда Highcharts создаст экземпляр.
   }
 
   onChartInstance(chart: Highcharts.Chart) {
     console.log('GraphChart: экземпляр чарта получен');
     this.chartInstance = chart;
-    // Опционально: обновить данные, если они уже есть и chartInstance был недоступен ранее
-    // this.updateChartWithInstance();
   }
 
   private updateChartWithInstance(): void {
     if (!this.chartInstance) {
       console.warn('GraphChart: chartInstance не доступен, обновление отложено или пропущено');
-      // Если chartInstance не доступен, мы не можем обновить содержимое напрямую.
-      // Но мы можем обновить chartOptions.series и триггернуть update через обычные переменные.
       const seriesData = this.chartData();
       if (seriesData && seriesData.length > 0) {
         const chartSeries = seriesData.map(series => ({
@@ -178,9 +160,9 @@ export class GraphChart implements AfterViewInit {
         console.log('GraphChart: очищаем chartOptions.series (без экземпляра)');
         this.chartOptions.series = [];
       }
-      // Устанавливаем обычные переменные
+
       this.oneToOneFlag = true;
-      this.updateFlag = true; // Это триггерит обновление
+      this.updateFlag = true;
       return;
     }
 
@@ -199,18 +181,16 @@ export class GraphChart implements AfterViewInit {
       }));
       console.log('GraphChart: обновляем график с сериями через экземпляр', chartSeries);
 
-      // Обновляем опции
       this.chartOptions.series = chartSeries;
 
-      // Устанавливаем обычные переменные
       this.oneToOneFlag = true;
-      this.updateFlag = true; // Это триггерит обновление
+      this.updateFlag = true;
 
     } else {
       console.log('GraphChart: очищаем график через экземпляр (нет данных)');
       this.chartOptions.series = [];
       this.oneToOneFlag = true;
-      this.updateFlag = true; // Это триггерит обновление
+      this.updateFlag = true;
     }
   }
 }

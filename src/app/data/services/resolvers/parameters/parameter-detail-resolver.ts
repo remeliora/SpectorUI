@@ -1,4 +1,4 @@
-import { ResolveFn } from '@angular/router';
+import {ResolveFn} from '@angular/router';
 import {ParameterDetail} from '../../interfaces/parameter/parameter-detail';
 import {DeviceTypeDetail} from '../../interfaces/device-type/device-type-detail';
 import {DeviceByDeviceType} from '../../interfaces/device/device-by-device-type';
@@ -34,7 +34,8 @@ export const parameterDetailResolver: ResolveFn<parameterDetailPageData> = (rout
       deviceType: null,
       devices: [],
       dataTypes: [],
-      statusDictionaries: []});
+      statusDictionaries: []
+    });
   }
 
   const parameter$ = parameterId === 'new' || parameterId === null
@@ -64,11 +65,11 @@ export const parameterDetailResolver: ResolveFn<parameterDetailPageData> = (rout
       catchError(error => {
         console.error('Failed to load data types in resolver', error);
         return of([
-          { name: 'INTEGER', displayName: 'Целочисленный' },
-          { name: 'DOUBLE', displayName: 'Дробный' },
-          { name: 'LONG', displayName: 'Большое целое число' },
-          { name: 'STRING', displayName: 'Строковый' },
-          { name: 'ENUMERATED', displayName: 'Перечисляемый' }
+          {name: 'INTEGER', displayName: 'Целочисленный'},
+          {name: 'DOUBLE', displayName: 'Дробный'},
+          {name: 'LONG', displayName: 'Большое целое число'},
+          {name: 'STRING', displayName: 'Строковый'},
+          {name: 'ENUMERATED', displayName: 'Перечисляемый'}
         ]);
       })
     ),

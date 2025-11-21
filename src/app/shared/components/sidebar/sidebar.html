@@ -16,12 +16,14 @@
 
 <footer class="sidebar__footer">
   <div class="footer-button">
-    <a [routerLink]="['/settings']">
+    <div [routerLink]="['/settings']"
+         class="footer-button__settings">
       <svg icon="settings" class="footer-icon"></svg>
-    </a>
-    <a [routerLink]="['/faq']">
+    </div>
+    <div [routerLink]="['/faq']"
+         class="footer-button__question">
       <svg icon="question" class="footer-icon"></svg>
-    </a>
+    </div>
   </div>
 </footer>
 

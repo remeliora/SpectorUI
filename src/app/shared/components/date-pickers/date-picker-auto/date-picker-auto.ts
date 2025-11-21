@@ -19,7 +19,6 @@ export class DatePickerAuto {
   @Input() placeholder: string = '1';
   @Input() min: number = 1;
   @Input() max: number = 1000;
-  // @Input() timePlaceholder: string = 'Единица времени'
 
   // Используем signals для локального состояния
   selectedValue: number = 1;

@@ -14,7 +14,7 @@ export class ButtonCreate {
   private readonly graphStateService = inject(GraphStateService);
 
   onClick(): void {
-    console.log('Кнопка "Построить" нажата');
+    // console.log('Кнопка "Построить" нажата');
     this.graphStateService.buildChart();
   }
 }

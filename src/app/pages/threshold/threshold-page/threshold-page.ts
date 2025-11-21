@@ -1,5 +1,4 @@
 import {Component, DestroyRef, inject, signal} from '@angular/core';
-import {Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NavbarService} from '../../../data/services/navbar-service';
 import {ButtonAdd} from "../../../shared/components/buttons/button-add/button-add";
@@ -34,7 +33,6 @@ export class ThresholdPage {
   private readonly router = inject(Router);
   private readonly navbarService = inject(NavbarService);
   private readonly destroyRef = inject(DestroyRef);
-  private destroy$ = new Subject<void>();
 
   // === STATES ===
   deviceId: number | null = null;

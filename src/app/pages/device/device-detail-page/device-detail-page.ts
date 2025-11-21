@@ -117,7 +117,7 @@ export class DeviceDetailPage {
     this.navbarService.setConfig({
       showBackButton: true,
       backRoute: `/devices`,
-      showSubsectionButton: true,
+      showSubsectionButton: this.isEditMode() && !this.isNotFound(),
       subsectionButton: {
         label: 'Пороговые значения',
         route: `/devices/${this.deviceId}/thresholds`

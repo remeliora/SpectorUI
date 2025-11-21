@@ -8,7 +8,7 @@ interface UniqueParameter {
   id: number;
   name: string;
   description: string;
-  uniqueKey: string; // <-- Новый уникальный ключ
+  uniqueKey: string;
 }
 
 interface TransformedDeviceWithActiveParameters {
@@ -34,7 +34,7 @@ export class MultiListSelect {
         ...device,
         parameters: device.parameters.map(param => ({
           ...param,
-          uniqueKey: `${device.id}_${param.id}` // <-- Создаем уникальный ключ
+          uniqueKey: `${device.id}_${param.id}`
         }))
       }))
     );
@@ -170,7 +170,7 @@ export class MultiListSelect {
 
   // Эти методы теперь обращаются к сигналу deviceParameterMap
   getCheckboxState(deviceId: number): 'checked' | 'unchecked' | 'indeterminate' {
-    const deviceParams = this.deviceParameterMap().get(deviceId); // <-- Обращение к сигналу
+    const deviceParams = this.deviceParameterMap().get(deviceId);
     // Используем this.transformedDevices()
     const device = this.transformedDevices().find(d => d.id === deviceId);
 

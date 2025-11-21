@@ -1,12 +1,12 @@
 <!-- navbar.html -->
-<nav>
+<nav class="navbar-container">
   @if (config.showBackButton) {
     <app-menu-back-button (backClicked)="navigateBack()"></app-menu-back-button>
   }
 
   <!-- Основные ссылки -->
   @if (config.showMainLinks) {
-    <ul class="main-menu-list">
+    <div class="main-menu-list">
       @for (menuItem of mainMenuItems; track menuItem) {
         <li>
           <a [routerLink]="[menuItem.link]">
@@ -16,7 +16,7 @@
           </a>
         </li>
       }
-    </ul>
+    </div>
   }
 
   <!-- Фильтр -->
@@ -42,12 +42,12 @@
 
   <!-- Ссылки подразделов -->
   @if (config.showSubsectionButton && config.subsectionButton) {
-    <ul class="main-menu-list">
+    <div class="main-menu-list">
       <li>
         <a [routerLink]="config.subsectionButton.route">
           <app-menu-button [label]="config.subsectionButton.label"></app-menu-button>
         </a>
       </li>
-    </ul>
+    </div>
   }
 </nav>

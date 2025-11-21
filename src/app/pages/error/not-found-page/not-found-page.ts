@@ -1,7 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {SvgIcon} from '../../../shared/components/svg-icon/svg-icon';
 import {Router} from '@angular/router';
-import {LocationStrategy} from '@angular/common';
 
 @Component({
   selector: 'app-not-found-page',

@@ -1,13 +1,14 @@
 .page-content {
   display: grid;
-  grid-template-rows: 155px auto;
+  grid-template-rows: 94px auto;
   height: 100%;
+  padding: 60px 60px 60px 0;
 }
 
 .page-header {
   display: grid;
   grid-template-columns: 70% 30%;
-  padding: 20px 20px 20px 0;
+  padding-bottom: 20px;
   align-content: end;
 }
 
@@ -23,7 +24,6 @@
 }
 
 .page-header__button-container {
-  padding: 0 40px 0 0;
   display: flex;
   grid-gap: 20px;
   align-items: end;
@@ -31,7 +31,6 @@
 }
 
 .page-body {
-  margin: 0 60px 60px 0;
   border: 2px solid var(--inactive-buttom-color);
   border-radius: 10px;
   height: 780px;
@@ -42,6 +41,7 @@
   margin: 20px;
   height: 737px;
   overflow: auto;
+
   // Скрываем скроллбар но оставляем функциональность
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE и Edge */

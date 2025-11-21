@@ -4,7 +4,7 @@ import {ThresholdCard} from '../../interfaces/threshold/threshold-card';
 import {inject} from '@angular/core';
 import {DeviceService} from '../../device-service';
 import {ThresholdService} from '../../threshold-service';
-import {catchError, map, forkJoin, of, switchMap} from 'rxjs';
+import {catchError, forkJoin, map, of, switchMap} from 'rxjs';
 import {ParameterService} from '../../parameter-service';
 import {ParameterDetail} from '../../interfaces/parameter/parameter-detail';
 
@@ -21,13 +21,13 @@ export const thresholdResolver: ResolveFn<ThresholdPageData> = (route, state) =>
   const idParam = route.paramMap.get('deviceId');
   if (!idParam) {
     console.error('Missing deviceId in route params');
-    return of({ device: null, thresholds: [] });
+    return of({device: null, thresholds: []});
   }
 
   const deviceId = Number(idParam);
   if (isNaN(deviceId)) {
     console.error('Invalid deviceId:', idParam);
-    return of({ device: null, thresholds: [] });
+    return of({device: null, thresholds: []});
   }
 
   // Сначала загружаем основное устройство, чтобы получить deviceTypeId
@@ -35,13 +35,13 @@ export const thresholdResolver: ResolveFn<ThresholdPageData> = (route, state) =>
     switchMap(device => {
       if (!device) {
         console.error('Device not found');
-        return of({ device: null, thresholds: [] });
+        return of({device: null, thresholds: []});
       }
 
       const deviceTypeId = device.deviceTypeId;
       if (!deviceTypeId) { // Проверка на null, undefined, 0
         console.error('Device Type ID not found on device object');
-        return of({ device: null, thresholds: [] });
+        return of({device: null, thresholds: []});
       }
 
       // Теперь загружаем пороги
@@ -59,22 +59,22 @@ export const thresholdResolver: ResolveFn<ThresholdPageData> = (route, state) =>
     switchMap(result => { // Изменили деструктуризацию, чтобы явно обработать случай ошибки
       // Проверяем, был ли возврат early из-за отсутствия deviceTypeId
       if (result.device === null) {
-        return of({ device: null, thresholds: [] });
+        return of({device: null, thresholds: []});
       }
-      const { device, thresholds, deviceTypeId } = result;
+      const {device, thresholds, deviceTypeId} = result;
 
       if (!thresholds || thresholds.length === 0) {
-        return of({ device, thresholds: [] });
+        return of({device, thresholds: []});
       }
 
       // Создаем массив Observable для получения деталей параметров
       const parameterRequests$ = thresholds.map(threshold =>
         parameterService.getParameterById(deviceTypeId, threshold.parameterId).pipe(
-          map((param: ParameterDetail) => ({ ...threshold, parameterName: param.description })),
+          map((param: ParameterDetail) => ({...threshold, parameterName: param.description})),
           catchError(error => {
             console.error(`Failed to load parameter ${threshold.parameterId} in resolver`, error);
             // В случае ошибки, можно оставить ID или подставить заглушку
-            return of({ ...threshold, parameterName: `Параметр ${threshold.parameterId}` });
+            return of({...threshold, parameterName: `Параметр ${threshold.parameterId}`});
           })
         )
       );
@@ -89,7 +89,7 @@ export const thresholdResolver: ResolveFn<ThresholdPageData> = (route, state) =>
     }),
     catchError(error => {
       console.error('Failed to load threshold page data in resolver', error);
-      return of({ device: null, thresholds: [] });
+      return of({device: null, thresholds: []});
     })
   );
 };

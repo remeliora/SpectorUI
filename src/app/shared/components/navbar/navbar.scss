@@ -1,6 +1,10 @@
+.navbar-container {
+  display: grid;
+  align-items: center;
+  grid-gap: 40px;
+}
+
 .main-menu-list {
-  margin: 0 20px 0 20px;
-  padding: 20px;
   background: none;
   list-style: none;
   display: grid;

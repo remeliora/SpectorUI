@@ -1,4 +1,4 @@
-import { ResolveFn } from '@angular/router';
+import {ResolveFn} from '@angular/router';
 import {AppSettingDetail} from '../../interfaces/app-setting/app-setting-detail';
 import {inject} from '@angular/core';
 import {AppSettingService} from '../../app-setting-service';
